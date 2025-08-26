@@ -5,7 +5,7 @@ payload = {
     "clientId": "175482686405285",
     "clientSecret": "dc190e6d0e4f4fc79e4021e4b981e596"
 }
-
+glovoUrl = config.API_URL;
 # payload = {
 #     "grantType": "client_credentials",
 #     "clientId": os.getenv("API_KEY"),
@@ -14,13 +14,14 @@ payload = {
 
 headers = {"Content-Type": "application/json"}
 
-response = requests.post(config.API_URL, json=payload, headers=headers)
+response = requests.post(glovoUrl, json=payload, headers=headers)
 print("Response", response);
+print ("Status Code", response.status_code);
 
 # Check request status
 if response.status_code == 200:
     data = response.json()   # convert JSON response to dict
-    access_token = data.get("access_token")  # key name depends on API
-    print("Bearer Token:", access_token)
+    print("Response Data:", data);
+    access_token = data.get("accessToken") 
 else:
     print("Error:", response.status_code, response.text)
