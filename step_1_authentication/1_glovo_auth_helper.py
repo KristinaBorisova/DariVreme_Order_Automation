@@ -22,6 +22,8 @@ print ("Status Code", response.status_code);
 if response.status_code == 200:
     data = response.json()   # convert JSON response to dict
     print("Response Data:", data);
-    access_token = data.get("accessToken") 
+    #passing the value to the config file 
+    config.Access_Token = data.get("accessToken") 
+
 else:
     print("Error:", response.status_code, response.text)
