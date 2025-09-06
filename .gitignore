@@ -1,0 +1,93 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Data files
+*.xlsx
+*.xls
+*.csv
+*.json
+!requirements.txt
+!package.json
+!package-lock.json
+
+# Credentials and secrets
+google_sheets_credentials.json
+*.pem
+*.key
+*.crt
+.env.local
+.env.production
+
+# Results and outputs
+*_results_*.json
+*_results_*.xlsx
+quote_results.json
+order_results.json
+order_results.xlsx
+production_results_*.json
+production_order_results.xlsx
+test_*.json
+test_*.xlsx
+direct_test_*.xlsx
+
+# Cache
+.cache/
+*.cache
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# GitHub Actions artifacts
+.github/workflows/artifacts/

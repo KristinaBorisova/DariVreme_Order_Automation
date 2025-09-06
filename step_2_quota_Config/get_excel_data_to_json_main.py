@@ -1,5 +1,6 @@
 # any_script.py
-from sheet_to_json import load_workbook_to_dict
+
+from step_2_quota_Config.sheet_to_json import load_workbook_to_dict
 
 url = "https://docs.google.com/spreadsheets/d/1OjOkAol3vXCbk-QPGioUAJnQgPs3t9HQ/edit?usp=sharing"
 data = load_workbook_to_dict(url)

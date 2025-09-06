@@ -57,5 +57,7 @@ if __name__ == "__main__":
     try:
         token = get_bearer_token()
         print("✅ Successfully got token:", token[:10] + "...")  # only show part of it
+        config.Access_Token = token;
+        print("Access Token in config:", config.Access_Token[:10] + "...");
     except Exception as e:
         print("❌ Failed:", e)

@@ -6,7 +6,14 @@ import requests
 from typing import Dict, Any, List, Iterable, Tuple, Optional
 
 URL = "https://stageapi.glovoapp.com/v2/laas/quotes"
-TOKEN = os.getenv("GLOVO_TOKEN", "YOUR_BEARER_TOKEN_HERE")  # or export GLOVO_TOKEN=...
+
+# Import token service from step 1
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'step_1_authentication'))
+from token_service import get_bearer_token
+
+# Get token from authentication module
+TOKEN = get_bearer_token()
 
 HEADERS = {
     "Authorization": f"Bearer {TOKEN}",
@@ -25,37 +32,36 @@ HEADERS = {
 # }
 
 def row_to_payload(row: Dict[str, Any]) -> Dict[str, Any]:
-    """Map one order row to the Glovo payload. EDIT field names here to match your JSON schema."""
     return {
         "pickupDetails": {
             "addressBook": {
-                "id": row["pickup_address_id"],
+                "id": row["pickupAddressBookId"],
             },
-            "pickupTime": row["pickup_time_utc"],  # must be ISO8601 UTC with 'Z'
+            "pickupTime": row["pickupTimeUtc"],  # must be ISO8601 UTC with 'Z'
         },
         "deliveryAddress": {
-            "rawAddress": row["dest_raw_address"],
+            "rawAddress": row["deliveryRawAddress"],
             "coordinates": {
-                "latitude": float(row["dest_lat"]),
-                "longitude": float(row["dest_lng"]),
+                "latitude": float(row["deliveryLatitude"]),
+                "longitude": float(row["deliveryLongitude"]),
             },
-            "details": row.get("dest_details", ""),
+            "details": row.get("deliveryDetails", ""),
         },
     }
 
 def validate_row(row: Dict[str, Any]) -> Optional[str]:
     """Return None if ok, else an error message describing what's missing/wrong."""
-    required = ["pickup_address_id", "pickup_time_utc", "dest_raw_address", "dest_lat", "dest_lng"]
+    required = ["pickupAddressBookId", "pickupTimeUtc", "deliveryRawAddress", "deliveryLatitude", "deliveryLongitude"]
     missing = [k for k in required if k not in row or row[k] in (None, "")]
     if missing:
         return f"Missing fields: {', '.join(missing)}"
     # quick type checks
     try:
-        float(row["dest_lat"]); float(row["dest_lng"])
+        float(row["deliveryLatitude"]); float(row["deliveryLongitude"])
     except Exception:
-        return "dest_lat/dest_lng must be numeric"
-    if not isinstance(row["pickup_time_utc"], str) or not row["pickup_time_utc"].endswith("Z"):
-        return "pickup_time_utc must be ISO8601 UTC string ending with 'Z'"
+        return "deliveryLatitude/deliveryLongitude must be numeric"
+    if not isinstance(row["pickupTimeUtc"], str) or not row["pickupTimeUtc"].endswith("Z"):
+        return "pickupTimeUtc must be ISO8601 UTC string ending with 'Z'"
     return None
 
 def send_quote(payload: Dict[str, Any]) -> Tuple[bool, Dict[str, Any]]:
@@ -130,23 +136,37 @@ def process_orders(rows: Iterable[Dict[str, Any]],
     }
 
 if __name__ == "__main__":
-    # === Option A: if you ALREADY have the in-memory workbook dict ===
-    # from sheet_to_json import load_workbook_to_dict
-    # workbook = load_workbook_to_dict("your_excel_or_gsheets_source")
-    # rows = iter_orders_from_memory(workbook, sheet_name="Orders")  # change the sheet name
-    # summary = process_orders(rows, rate_limit_per_sec=5.0)
-
-    # === Option B: read from a JSON file produced earlier ===
-    # For a dict-of-sheets JSON (e.g., workbook.json)
-    path_to_json = "workbook.json"             # or a single-sheet JSON file (list)
-    sheet_name = "Orders"                      # set to your real sheet/tab name (ignored if file is a list)
-    rows = iter_orders_from_file(path_to_json, sheet_name=sheet_name)
-    summary = process_orders(rows, rate_limit_per_sec=5.0)
+    # === Option A: Load directly from Google Sheets ===
+    from sheet_to_json import load_workbook_to_dict
+    
+    # Your actual Google Sheets URL
+    google_sheets_url = "https://docs.google.com/spreadsheets/d/1OjOkAol3vXCbk-QPGioUAJnQgPs3t9HQ/edit?usp=sharing&ouid=100766369247091180171&rtpof=true&sd=true"
+    
+    print("Loading data from Google Sheets...")
+    workbook = load_workbook_to_dict(google_sheets_url)
+    
+    # Find the sheet with order data (it might be named differently)
+    sheet_names = list(workbook.keys())
+    print(f"Available sheets: {sheet_names}")
+    
+    # Use the first sheet that contains data
+    sheet_name = sheet_names[0] if sheet_names else "Sheet1"
+    print(f"Using sheet: {sheet_name}")
+    
+    rows = iter_orders_from_memory(workbook, sheet_name=sheet_name)
+    summary = process_orders(rows, rate_limit_per_sec=3.0)  # Slower rate for production
 
     print("\n=== Summary ===")
     print(f"Total: {summary['total']}")
     print(f"Successes: {len(summary['successes'])}")
     print(f"Failures: {len(summary['failures'])}")
+
+    # Save results for Step 3
+    results_file = "quote_results.json"
+    with open(results_file, "w", encoding="utf-8") as f:
+        json.dump(summary, f, ensure_ascii=False, indent=2)
+    print(f"\nQuote results saved to: {results_file}")
+    print("You can now run Step 3 to create orders with these quote IDs.")
 
     if summary["failures"]:
         # show a couple of failures for debugging
