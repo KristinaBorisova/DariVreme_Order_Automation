@@ -34,10 +34,19 @@ jobs:
         
     - name: Set up environment variables
       run: |
-        echo "TOKEN_URL=${{ secrets.TOKEN_URL }}" >> $GITHUB_ENV
+        echo "TOKEN_URL=https://stageapi.glovoapp.com/oauth/token" >> $GITHUB_ENV
         echo "API_KEY=${{ secrets.API_KEY }}" >> $GITHUB_ENV
         echo "API_SECRET=${{ secrets.API_SECRET }}" >> $GITHUB_ENV
         echo "GOOGLE_SHEETS_URL=${{ secrets.GOOGLE_SHEETS_URL }}" >> $GITHUB_ENV
+        echo "Environment variables set successfully"
+        echo "TOKEN_URL: https://stageapi.glovoapp.com/oauth/token"
+        echo "API_KEY is set: ${{ secrets.API_KEY != '' }}"
+        echo "API_SECRET is set: ${{ secrets.API_SECRET != '' }}"
+        echo "GOOGLE_SHEETS_URL is set: ${{ secrets.GOOGLE_SHEETS_URL != '' }}"
+        
+    - name: Test environment variables
+      run: |
+        python test_env_vars.py
         
     - name: Test authentication
       run: |

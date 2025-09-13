@@ -22,17 +22,26 @@ def _write_cache(token: str, expires_in: int):
     CACHE_PATH.write_text(json.dumps(payload))
 
 def _fetch_new_token() -> str:
+    # Use environment variables if available, fallback to hardcoded values
+    api_key = os.getenv("API_KEY", "175482686405285")
+    api_secret = os.getenv("API_SECRET", "dc190e6d0e4f4fc79e4021e4b981e596")
+    
     payload = {
-    #     "grantType": "client_credentials",
-    #     "clientId": os.getenv("API_KEY"),
-    #     "clientSecret": os.getenv("API_SECRET"),
-    # }
-    "grantType": "client_credentials",
-    "clientId": "175482686405285",
-    "clientSecret": "dc190e6d0e4f4fc79e4021e4b981e596"
+        "grantType": "client_credentials",
+        "clientId": api_key,
+        "clientSecret": api_secret
     }
     headers = {"Content-Type": "application/json"}
+    
+    print(f"🔑 Fetching token from: {TOKEN_URL}")
+    print(f"🔑 Using API Key: {api_key[:8]}...")
+    
     r = requests.post(TOKEN_URL, json=payload, headers=headers, timeout=30)
+    
+    if r.status_code != 200:
+        print(f"❌ Token request failed: {r.status_code}")
+        print(f"❌ Response: {r.text}")
+    
     r.raise_for_status()
     data = r.json()
     token = data.get("accessToken")
