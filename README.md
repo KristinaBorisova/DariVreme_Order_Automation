@@ -254,7 +254,7 @@ TOKEN = os.getenv("GLOVO_TOKEN", "YOUR_BEARER_TOKEN_HERE")
 def extract_quote_ids_from_successes(successes) -> List[Dict[str, Any]]  # Extract quote IDs
 def create_order_payload(quote_data, client_details) -> Dict[str, Any]   # Create order payload
 def send_order_with_quote_id(quote_id, payload) -> Tuple[bool, Dict]     # Send order request
-def process_orders_from_quotes(quote_data_list, client_details)          # Process multiple orders
+def process_orders_from_quotes(quote_data_list)#, #client_details)          # Process multiple orders
 def load_quote_successes_from_file(file_path) -> List[Dict[str, Any]]    # Load quote results
 def save_order_results(results, output_file)                             # Save results
 ```

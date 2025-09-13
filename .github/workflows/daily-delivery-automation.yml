@@ -1,0 +1,86 @@
+name: Daily Delivery Automation
+
+on:
+  # Run every weekday at 9:00 AM UTC (adjust timezone as needed)
+  schedule:
+    - cron: '0 9 * * 1-5'  # Monday-Friday at 9:00 AM UTC
+  
+  # Allow manual triggering
+  workflow_dispatch:
+    inputs:
+      test_mode:
+        description: 'Run in test mode (dry run)'
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  daily-delivery:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    - name: Set up environment variables
+      run: |
+        echo "TOKEN_URL=${{ secrets.TOKEN_URL }}" >> $GITHUB_ENV
+        echo "API_KEY=${{ secrets.API_KEY }}" >> $GITHUB_ENV
+        echo "API_SECRET=${{ secrets.API_SECRET }}" >> $GITHUB_ENV
+        echo "GOOGLE_SHEETS_URL=${{ secrets.GOOGLE_SHEETS_URL }}" >> $GITHUB_ENV
+        
+    - name: Test authentication
+      run: |
+        cd step_1_authentication
+        python token_service.py
+        
+    - name: Run daily delivery automation
+      run: |
+        if [ "${{ github.event.inputs.test_mode }}" = "true" ]; then
+          echo "🧪 Running in test mode (dry run)"
+          python test_weekday_automation.py
+        else
+          echo "🚀 Running daily delivery automation"
+          python daily_delivery_automation.py
+        fi
+        
+    - name: Upload logs
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: daily-delivery-logs-${{ github.run_number }}
+        path: |
+          logs/
+          daily_results/
+          
+    - name: Upload results
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: daily-delivery-results-${{ github.run_number }}
+        path: |
+          quote_results_final.json
+          test_order_results.json
+          daily_results/
+          
+    - name: Notify on failure
+      if: failure()
+      uses: actions/github-script@v6
+      with:
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: '❌ Daily delivery automation failed. Check the logs for details.'
+          })

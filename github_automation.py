@@ -151,15 +151,11 @@ def run_automation(config: Dict[str, Any], logger: logging.Logger):
         
         quote_data_list = extract_quote_ids_from_successes(quote_summary['successes'])
         
-        client_details = {
-            "name": "Automated Client",
-            "phone": "+359888123456",
-            "email": "automation@darivreme.com"
-        }
+        # Client details are now extracted from Google Sheets data in the quote_data_list
+        # No need for hardcoded client details
         
         order_results = process_orders_from_quotes(
             quote_data_list=quote_data_list,
-            client_details=client_details,
             rate_limit_per_sec=config['rate_limit_per_sec'],
             log_orders=True,
             use_google_sheets=True,

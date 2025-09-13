@@ -150,7 +150,7 @@ def test_order_creation():
         
         results = process_orders_from_quotes(
             quote_data_list=quote_data_list,
-            client_details=client_details,
+            #client_details=client_details,
             rate_limit_per_sec=1.0  # Slower for testing
         )
         

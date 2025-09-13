@@ -176,7 +176,7 @@ def test_order_creation(quote_summary):
         
         results = process_orders_from_quotes(
             quote_data_list=test_quote_data,
-            client_details=client_details,
+            #client_details=client_details,
             rate_limit_per_sec=1.0
         )
         

@@ -1,0 +1,14 @@
+[Unit]
+Description=Daily Delivery Automation
+After=network.target
+
+[Service]
+Type=oneshot
+User=Yoanna Todorova
+WorkingDirectory=/Users/kristinaborisova/work/Glovo_DariVreme_Order_Automation
+ExecStart=/Users/kristinaborisova/.pyenv/versions/3.12.2/bin/python /Users/kristinaborisova/work/Glovo_DariVreme_Order_Automation/daily_delivery_automation.py
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

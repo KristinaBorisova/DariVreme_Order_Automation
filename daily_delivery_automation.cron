@@ -1,0 +1,2 @@
+# Daily Delivery Automation - Runs Monday-Friday at 9:00 AM
+0 9 * * 1-5 /Users/kristinaborisova/.pyenv/versions/3.12.2/bin/python /Users/kristinaborisova/work/Glovo_DariVreme_Order_Automation/daily_delivery_automation.py >> /tmp/daily_delivery_automation.log 2>&1

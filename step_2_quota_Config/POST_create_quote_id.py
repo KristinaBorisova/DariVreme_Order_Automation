@@ -123,7 +123,18 @@ def process_orders(rows: Iterable[Dict[str, Any]],
         payload = row_to_payload(row)
         ok, resp = send_quote(payload)
         if ok:
-            successes.append({"index": i, "row": row, "response": resp})
+            # Preserve client information in success response
+            client_details = {
+                "name": row.get("client_name", "Unknown Client"),
+                "phone": row.get("client_phone", "Unknown Phone"),
+                "email": row.get("client_email", "Unknown Email")
+            }
+            successes.append({
+                "index": i, 
+                "row": row, 
+                "response": resp,
+                "client_details": client_details
+            })
         else:
             failures.append({"index": i, "row": row, "reason": resp})
 
