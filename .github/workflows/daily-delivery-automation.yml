@@ -44,6 +44,22 @@ jobs:
         echo "API_SECRET is set: ${{ secrets.API_SECRET != '' }}"
         echo "GOOGLE_SHEETS_URL is set: ${{ secrets.GOOGLE_SHEETS_URL != '' }}"
         
+    - name: Verify secrets are set
+      run: |
+        if [ -z "${{ secrets.API_KEY }}" ]; then
+          echo "❌ API_KEY secret is not set"
+          exit 1
+        fi
+        if [ -z "${{ secrets.API_SECRET }}" ]; then
+          echo "❌ API_SECRET secret is not set"
+          exit 1
+        fi
+        if [ -z "${{ secrets.GOOGLE_SHEETS_URL }}" ]; then
+          echo "❌ GOOGLE_SHEETS_URL secret is not set"
+          exit 1
+        fi
+        echo "✅ All required secrets are set"
+        
     - name: Test environment variables
       run: |
         python test_env_vars.py
@@ -82,14 +98,8 @@ jobs:
           test_order_results.json
           daily_results/
           
-    - name: Notify on failure
+    - name: Log failure
       if: failure()
-      uses: actions/github-script@v6
-      with:
-        script: |
-          github.rest.issues.createComment({
-            issue_number: context.issue.number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: '❌ Daily delivery automation failed. Check the logs for details.'
-          })
+      run: |
+        echo "❌ Daily delivery automation failed. Check the logs for details."
+        echo "Workflow run URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
