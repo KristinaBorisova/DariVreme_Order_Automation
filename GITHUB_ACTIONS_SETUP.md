@@ -149,7 +149,7 @@ schedule:
 ### Different Python Version
 ```yaml
 - name: Set up Python
-  uses: actions/setup-python@v4
+  uses: actions/setup-python@v5
   with:
     python-version: '3.11'  # Change version
 ```
@@ -193,6 +193,17 @@ Add this step to get email notifications on failure:
     status: failure
     channel: '#delivery-automation'
     webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+```
+
+### Discord Notifications
+```yaml
+- name: Notify Discord on failure
+  if: failure()
+  uses: Ilshidur/action-discord@master
+  with:
+    args: 'Daily delivery automation failed. Check the logs for details.'
+  env:
+    DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
 ```
 
 ## ✅ Verification Checklist
