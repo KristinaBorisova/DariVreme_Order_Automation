@@ -2,8 +2,11 @@ name: Glovo Order Automation
 
 on:
   schedule:
-    # Run every 5 minutes
-    - cron: '*/5 * * * *'
+    # Run every 5 minutes (for testing)
+    # - cron: '*/5 * * * *'
+
+    # Run every day at 07:00 AM UTC
+    - cron: '0 7 * * *'
   workflow_dispatch:  # Allow manual triggering
   push:
     branches: [ main ]
@@ -44,54 +47,4 @@ jobs:
         
     - name: Run Glovo Order Automation
       env:
-        GLOVO_CLIENT_ID: ${{ secrets.GLOVO_CLIENT_ID }}
-        GLOVO_CLIENT_SECRET: ${{ secrets.GLOVO_CLIENT_SECRET }}
-        GLOVO_API_URL: ${{ secrets.GLOVO_API_URL }}
-        GOOGLE_SHEETS_URL: ${{ secrets.GOOGLE_SHEETS_URL }}
-        LOG_LEVEL: INFO
-      run: |
-        python production_workflow.py
-        
-    - name: Upload logs
-      uses: actions/upload-artifact@v3
-      if: always()
-      with:
-        name: glovo-automation-logs-${{ github.run_number }}
-        path: |
-          *.log
-          *.json
-          production_results_*.json
-        retention-days: 30
-        
-    - name: Notify on failure
-      if: failure()
-      uses: actions/github-script@v6
-      with:
-        script: |
-          const { owner, repo } = context.repo;
-          const issue = await github.rest.issues.create({
-            owner,
-            repo,
-            title: `🚨 Glovo Automation Failed - ${new Date().toISOString()}`,
-            body: `The Glovo order automation workflow failed at ${new Date().toISOString()}.
-            
-            **Workflow Details:**
-            - Run ID: ${context.runId}
-            - Commit: ${context.sha}
-            - Branch: ${context.ref}
-            
-            **Next Steps:**
-            1. Check the workflow logs for detailed error information
-            2. Verify your API credentials are still valid
-            3. Check if the Google Sheets is accessible
-            4. Ensure your pickup address IDs are valid
-            
-            **Logs:** Check the artifacts section for detailed logs.`,
-            labels: ['bug', 'automation', 'glovo']
-          });
-          
-    - name: Success notification
-      if: success()
-      run: |
-        echo "✅ Glovo automation completed successfully at $(date)"
-        echo "📊 Check your Google Sheets for new orders: ${{ secrets.GOOGLE_SHEETS_URL }}"
+        GLOVO_CLIENT_ID: ${{ secrets.GLOVO
