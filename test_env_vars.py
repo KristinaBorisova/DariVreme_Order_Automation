@@ -26,14 +26,23 @@ def test_environment_variables():
             # Mask sensitive values
             if 'SECRET' in var or 'KEY' in var:
                 masked_value = value[:8] + '*' * (len(value) - 12) + value[-4:] if len(value) > 12 else '***'
-                print(f"✅ {var}: {masked_value}")
+                print(f"✅ {var}: {masked_value} (length: {len(value)})")
             else:
-                print(f"✅ {var}: {value}")
+                print(f"✅ {var}: {value} (length: {len(value)})")
         else:
             print(f"❌ {var}: Not set")
             all_set = False
     
     print(f"\n📊 Summary: {'✅ All variables set' if all_set else '❌ Some variables missing'}")
+    
+    if not all_set:
+        print("\n🔍 Debugging info:")
+        print("If variables are missing, check:")
+        print("1. GitHub Secrets are set in repository settings")
+        print("2. Secret names match exactly (case-sensitive)")
+        print("3. Secrets are not empty")
+        print("4. Workflow has permission to access secrets")
+    
     return all_set
 
 def test_token_url():

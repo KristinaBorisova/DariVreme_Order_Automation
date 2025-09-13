@@ -44,22 +44,6 @@ jobs:
         echo "API_SECRET is set: ${{ secrets.API_SECRET != '' }}"
         echo "GOOGLE_SHEETS_URL is set: ${{ secrets.GOOGLE_SHEETS_URL != '' }}"
         
-    - name: Verify secrets are set
-      run: |
-        if [ -z "${{ secrets.API_KEY }}" ]; then
-          echo "❌ API_KEY secret is not set"
-          exit 1
-        fi
-        if [ -z "${{ secrets.API_SECRET }}" ]; then
-          echo "❌ API_SECRET secret is not set"
-          exit 1
-        fi
-        if [ -z "${{ secrets.GOOGLE_SHEETS_URL }}" ]; then
-          echo "❌ GOOGLE_SHEETS_URL secret is not set"
-          exit 1
-        fi
-        echo "✅ All required secrets are set"
-        
     - name: Test environment variables
       run: |
         python test_env_vars.py
