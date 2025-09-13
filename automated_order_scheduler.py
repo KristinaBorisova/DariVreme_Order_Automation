@@ -63,7 +63,7 @@ class AutomatedOrderScheduler:
         # Map day names to numbers
         day_mapping = {
             'monday': 0, 'tuesday': 1, 'wednesday': 2, 'thursday': 3,
-            'friday': 4, 'saturday': 5, 'sunday': 6
+            'friday': 4
         }
         target_days = [day_mapping.get(day, -1) for day in order_days]
         target_days = [d for d in target_days if d != -1]
