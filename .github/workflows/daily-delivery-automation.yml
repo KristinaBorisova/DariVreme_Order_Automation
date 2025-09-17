@@ -1,18 +1,19 @@
 name: Daily Delivery Automation
 
 on:
-  # Run every weekday at 9:00 AM UTC (adjust timezone as needed)
   schedule:
     - cron: '0 7 * * 1-5'  # Monday-Friday at 9:00 AM UTC
   
-  # Allow manual triggering
   workflow_dispatch:
     inputs:
-      test_mode:
-        description: 'Run in test mode (dry run)'
-        required: false
-        default: false
-        type: boolean
+      run_mode:
+        description: 'Choose run mode'
+        required: true
+        default: 'real'
+        type: choice
+        options:
+          - real
+          - test
 
 jobs:
   daily-delivery:
@@ -41,8 +42,7 @@ jobs:
         echo "Environment variables set successfully"
         
     - name: Test environment variables
-      run: |
-        python test_env_vars.py
+      run: python test_env_vars.py
         
     - name: Test authentication
       run: |
@@ -54,7 +54,7 @@ jobs:
         if [ "${{ github.event_name }}" = "schedule" ]; then
           echo "⏰ Scheduled run → real mode"
           python daily_delivery_automation.py
-        elif [ "${{ github.event.inputs.test_mode }}" = "true" ]; then
+        elif [ "${{ github.event.inputs.run_mode }}" = "test" ]; then
           echo "🧪 Manual trigger → test mode"
           python test_weekday_automation.py
         else
