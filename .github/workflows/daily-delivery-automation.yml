@@ -39,10 +39,6 @@ jobs:
         echo "API_SECRET=${{ secrets.API_SECRET }}" >> $GITHUB_ENV
         echo "GOOGLE_SHEETS_URL=${{ secrets.GOOGLE_SHEETS_URL }}" >> $GITHUB_ENV
         echo "Environment variables set successfully"
-        echo "TOKEN_URL: https://stageapi.glovoapp.com/oauth/token"
-        echo "API_KEY is set: ${{ secrets.API_KEY != '' }}"
-        echo "API_SECRET is set: ${{ secrets.API_SECRET != '' }}"
-        echo "GOOGLE_SHEETS_URL is set: ${{ secrets.GOOGLE_SHEETS_URL != '' }}"
         
     - name: Test environment variables
       run: |
@@ -55,35 +51,13 @@ jobs:
         
     - name: Run daily delivery automation
       run: |
-        if [ "${{ github.event.inputs.test_mode }}" = "true" ]; then
-          echo "🧪 Running in test mode (dry run)"
+        if [ "${{ github.event_name }}" = "schedule" ]; then
+          echo "⏰ Scheduled run → real mode"
+          python daily_delivery_automation.py
+        elif [ "${{ github.event.inputs.test_mode }}" = "true" ]; then
+          echo "🧪 Manual trigger → test mode"
           python test_weekday_automation.py
         else
-          echo "🚀 Running daily delivery automation"
+          echo "🚀 Manual trigger → real mode"
           python daily_delivery_automation.py
         fi
-        
-    - name: Upload logs
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: daily-delivery-logs-${{ github.run_number }}
-        path: |
-          logs/
-          daily_results/
-          
-    - name: Upload results
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: daily-delivery-results-${{ github.run_number }}
-        path: |
-          quote_results_final.json
-          test_order_results.json
-          daily_results/
-          
-    - name: Log failure
-      if: failure()
-      run: |
-        echo "❌ Daily delivery automation failed. Check the logs for details."
-        echo "Workflow run URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
