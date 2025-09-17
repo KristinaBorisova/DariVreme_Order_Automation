@@ -66,16 +66,25 @@ def extract_quote_ids_from_successes(successes: List[Dict[str, Any]]) -> List[Di
         quote_id = response.get("quoteId")
         
         if quote_id:
-            # All data is already in the row for FINAL_ORDERS structure
+            # Extract all the structured data that was created in quote creation
             row = success.get("row", {})
+            client_details = success.get("client_details", {})
+            restaurant_details = success.get("restaurant_details", {})
+            order_details = success.get("order_details", {})
+            
+            # Debug: Print what we're extracting (can be removed in production)
+            # print(f"🔍 Extracting data for quote {quote_id}:")
+            # print(f"   Client: {client_details.get('name', 'Unknown')}")
+            # print(f"   Restaurant: {restaurant_details.get('name', 'Unknown')}")
+            # print(f"   Order: {order_details.get('order_description', 'Unknown')}")
             
             quote_data.append({
                 "quote_id": quote_id,
                 "original_row": row,  # Complete row with all data
                 "quote_response": response,
-                "client_details": success.get("client_details", {}),
-                "restaurant_details": success.get("restaurant_details", {}),
-                "order_details": success.get("order_details", {}),
+                "client_details": client_details,
+                "restaurant_details": restaurant_details,
+                "order_details": order_details,
                 "index": success.get("index")
             })
         else:
@@ -88,6 +97,13 @@ def create_order_payload(quote_data: Dict[str, Any], client_details: Dict[str, s
     Create order payload for the Glovo API.
     Optimized for FINAL_ORDERS sheet structure.
     """
+    # Debug: Print client details being used (can be removed in production)
+    # print(f"🔍 Creating order payload with client details:")
+    # print(f"   Client details: {client_details}")
+    # print(f"   Name: {client_details.get('name', 'NOT_FOUND')}")
+    # print(f"   Phone: {client_details.get('phone', 'NOT_FOUND')}")
+    # print(f"   Email: {client_details.get('email', 'NOT_FOUND')}")
+    
     # Generate pickup order code
     pickup_order_code = f"ORD{int(time.time())}{quote_data.get('index', 0)}"
     
