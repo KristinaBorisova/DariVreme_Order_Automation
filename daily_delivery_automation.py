@@ -199,6 +199,10 @@ class DailyDeliveryAutomation:
             quote_data = {
                 "quote_id": success['response']['quoteId'],
                 "original_row": success['row'],
+                "quote_response": success['response'],
+                "client_details": success.get('client_details', {}),
+                "restaurant_details": success.get('restaurant_details', {}),
+                "order_details": success.get('order_details', {}),
                 "index": len(quote_data_list)
             }
             quote_data_list.append(quote_data)
@@ -224,14 +228,26 @@ class DailyDeliveryAutomation:
         if order_results['successful_orders']:
             self.logger.info("🎉 SUCCESSFUL ORDERS:")
             for order in order_results['successful_orders']:
-                self.logger.info(f"   • {order.get('client_name', 'Unknown')} - {order.get('order_description', 'Unknown')}")
-                self.logger.info(f"     Glovo Order ID: {order.get('glovo_order_id', 'N/A')}")
-                self.logger.info(f"     Pickup Code: {order.get('pickup_order_code', 'N/A')}")
+                client_details = order.get('client_details', {})
+                order_details = order.get('order_details', {})
+                order_response = order.get('order_response', {})
+                
+                client_name = client_details.get('name', 'Unknown')
+                order_description = order_details.get('order_description', 'Unknown')
+                glovo_order_id = order_response.get('id', 'N/A')
+                pickup_code = order.get('pickup_order_code', 'N/A')
+                
+                self.logger.info(f"   • {client_name} - {order_description}")
+                self.logger.info(f"     Glovo Order ID: {glovo_order_id}")
+                self.logger.info(f"     Pickup Code: {pickup_code}")
         
         if order_results['failed_orders']:
             self.logger.warning("⚠️  FAILED ORDERS:")
             for order in order_results['failed_orders']:
-                self.logger.warning(f"   • {order.get('client_name', 'Unknown')} - {order.get('error', 'Unknown error')}")
+                original_row = order.get('original_row', {})
+                client_name = original_row.get('client_name', 'Unknown')
+                error = order.get('error', 'Unknown error')
+                self.logger.warning(f"   • {client_name} - {error}")
         
         # Add weekday information to results
         order_results['weekday'] = current_weekday_name

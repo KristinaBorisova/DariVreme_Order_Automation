@@ -210,6 +210,8 @@ def process_orders_from_quotes_final(
         
         # Send order request
         print(f"   📤 Sending order request...")
+        print(f"   🔗 URL: {ORDER_URL_TEMPLATE.format(quote_id=quote_id)}")
+        print(f"   📋 Payload: {json.dumps(payload, indent=2)}")
         success, response = send_order_with_quote_id(quote_id, payload)
         
         if success:
@@ -227,6 +229,7 @@ def process_orders_from_quotes_final(
             print(f"   ✅ Order created successfully!")
             print(f"   📋 Glovo Order ID: {response.get('id', 'N/A')}")
             print(f"   🏷️  Pickup Code: {payload['pickupOrderCode']}")
+            print(f"   📄 Full Response: {json.dumps(response, indent=2)}")
             
             # Log the order if logging is enabled
             if google_sheets_logger:
@@ -247,6 +250,7 @@ def process_orders_from_quotes_final(
                 "error": response
             })
             print(f"   ❌ Order failed: {response}")
+            print(f"   📄 Full Error Response: {json.dumps(response, indent=2)}")
         
         # Rate limiting
         if i < len(quote_data_list):
