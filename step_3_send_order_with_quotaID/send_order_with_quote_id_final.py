@@ -203,6 +203,7 @@ def process_orders_from_quotes_final(
         order_details = quote_data.get("order_details", {})
         
         print(f"\n📦 Processing order {i}/{len(quote_data_list)}")
+        
         # Show actual data or indicate missing data
         client_id = client_details.get('client_id', '')
         client_name = client_details.get('name', '')

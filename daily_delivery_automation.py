@@ -195,7 +195,14 @@ class DailyDeliveryAutomation:
         
         # Extract quote data for order creation
         quote_data_list = []
-        for success in quote_summary['successes']:
+        for i, success in enumerate(quote_summary['successes'], 1):
+            # Debug: Print what we're extracting from quote creation
+            self.logger.info(f"🔍 DEBUG - Extracting quote data {i}:")
+            self.logger.info(f"   success keys: {list(success.keys())}")
+            self.logger.info(f"   client_details: {success.get('client_details', {})}")
+            self.logger.info(f"   restaurant_details: {success.get('restaurant_details', {})}")
+            self.logger.info(f"   order_details: {success.get('order_details', {})}")
+            
             quote_data = {
                 "quote_id": success['response']['quoteId'],
                 "original_row": success['row'],
