@@ -222,7 +222,11 @@ def process_orders_from_quotes_final(
         # Send order request
         print(f"   📤 Sending order request...")
         print(f"   🔗 URL: {ORDER_URL_TEMPLATE.format(quote_id=quote_id)}")
-        print(f"   📋 Payload: {json.dumps(payload, indent=2)}")
+        print(f"   📋 Payload being sent:")
+        print(f"      Contact Name: {payload['contact']['name']}")
+        print(f"      Contact Phone: {payload['contact']['phone']}")
+        print(f"      Contact Email: {payload['contact']['email']}")
+        print(f"      Full Payload: {json.dumps(payload, indent=2)}")
         success, response = send_order_with_quote_id(quote_id, payload)
         
         if success:
@@ -240,6 +244,14 @@ def process_orders_from_quotes_final(
             print(f"   ✅ Order created successfully!")
             print(f"   📋 Glovo Order ID: {response.get('id', 'N/A')}")
             print(f"   🏷️  Pickup Code: {payload['pickupOrderCode']}")
+            
+            # Debug: Show what the API returned for contact info
+            contact_info = response.get('contact', {})
+            print(f"   🔍 API Response Contact Info:")
+            print(f"      Name: {contact_info.get('name', 'NOT_FOUND')}")
+            print(f"      Phone: {contact_info.get('phone', 'NOT_FOUND')}")
+            print(f"      Email: {contact_info.get('email', 'NOT_FOUND')}")
+            
             print(f"   📄 Full Response: {json.dumps(response, indent=2)}")
             
             # Log the order if logging is enabled
