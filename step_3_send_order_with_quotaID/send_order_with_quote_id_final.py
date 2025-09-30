@@ -114,11 +114,15 @@ def create_order_payload(quote_data: Dict[str, Any], client_details: Dict[str, s
     # Use the descriptive order_id as package description
     package_description = original_row.get("order_id", "Food delivery order")
     
+    # Validate that we have all required client details
+    if not client_details.get("name") or not client_details.get("phone") or not client_details.get("email"):
+        raise ValueError(f"Missing required client details: {client_details}")
+    
     payload = {
         "contact": {
-            "name": client_details.get("name", "Default Client"),
-            "phone": client_details.get("phone", "+1234567890"),
-            "email": client_details.get("email", "client@example.com")
+            "name": client_details["name"],
+            "phone": client_details["phone"],
+            "email": client_details["email"]
         },
         "pickupOrderCode": pickup_order_code,
         "packageDetails": {
@@ -199,10 +203,16 @@ def process_orders_from_quotes_final(
         order_details = quote_data.get("order_details", {})
         
         print(f"\n📦 Processing order {i}/{len(quote_data_list)}")
-        print(f"   Client ID: {client_details.get('client_id', 'Unknown')}")
-        print(f"   Client: {client_details.get('name', 'Unknown')}")
-        print(f"   Restaurant: {restaurant_details.get('name', 'Unknown')}")
-        print(f"   Order: {order_details.get('order_description', 'Unknown')}")
+        # Show actual data or indicate missing data
+        client_id = client_details.get('client_id', '')
+        client_name = client_details.get('name', '')
+        restaurant_name = restaurant_details.get('name', '')
+        order_desc = order_details.get('order_description', '')
+        
+        print(f"   Client ID: {client_id if client_id else '❌ MISSING'}")
+        print(f"   Client: {client_name if client_name else '❌ MISSING'}")
+        print(f"   Restaurant: {restaurant_name if restaurant_name else '❌ MISSING'}")
+        print(f"   Order: {order_desc if order_desc else '❌ MISSING'}")
         print(f"   Quote ID: {quote_id}")
         
         # Create order payload

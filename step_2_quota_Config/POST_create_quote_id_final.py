@@ -140,11 +140,18 @@ def process_orders_final(rows: Iterable[Dict[str, Any]],
     
     for i, row in enumerate(rows, start=1):
         print(f"\n📋 Processing order {i}...")
-        print(f"   Client ID: {row.get('client_id', 'Unknown')}")
-        print(f"   Client: {row.get('client_name', 'Unknown')}")
-        print(f"   Restaurant: {row.get('restaurant_name', 'Unknown')}")
-        print(f"   Delivery: {row.get('deliveryRawAddress', 'Unknown')[:50]}...")
-        print(f"   Order Description: {row.get('order_id', 'Unknown')}")
+        # Show actual data or indicate missing data
+        client_id = row.get('client_id', '')
+        client_name = row.get('client_name', '')
+        restaurant_name = row.get('restaurant_name', '')
+        delivery_address = row.get('deliveryRawAddress', '')
+        order_desc = row.get('order_id', '')
+        
+        print(f"   Client ID: {client_id if client_id else '❌ MISSING'}")
+        print(f"   Client: {client_name if client_name else '❌ MISSING'}")
+        print(f"   Restaurant: {restaurant_name if restaurant_name else '❌ MISSING'}")
+        print(f"   Delivery: {(delivery_address[:50] + '...') if delivery_address else '❌ MISSING'}")
+        print(f"   Order Description: {order_desc if order_desc else '❌ MISSING'}")
         
         # Validate row
         validation_error = validate_row(row)
@@ -172,28 +179,44 @@ def process_orders_final(rows: Iterable[Dict[str, Any]],
             print(f"   ✅ Quote created successfully!")
             print(f"   📋 Quote ID: {response.get('quoteId', 'N/A')}")
             
+            # Validate that we have all required data from the Excel file
+            required_client_fields = ["client_id", "client_name", "client_phone", "client_email"]
+            required_restaurant_fields = ["restaurant_name", "pickupAddressBookId"]
+            required_order_fields = ["order_id", "deliveryFrequency"]
+            
+            missing_client = [field for field in required_client_fields if not row.get(field)]
+            missing_restaurant = [field for field in required_restaurant_fields if not row.get(field)]
+            missing_order = [field for field in required_order_fields if not row.get(field)]
+            
+            if missing_client or missing_restaurant or missing_order:
+                print(f"   ⚠️  Warning: Missing required fields in Excel data:")
+                if missing_client: print(f"      Client fields: {missing_client}")
+                if missing_restaurant: print(f"      Restaurant fields: {missing_restaurant}")
+                if missing_order: print(f"      Order fields: {missing_order}")
+                print(f"      This may cause issues in order creation.")
+            
             # Preserve all information from the row using your exact column names
             successes.append({
                 "index": i,
                 "row": row,  # Complete row with all data
                 "response": response,
                 "client_details": {
-                    "client_id": row.get("client_id", "Unknown"),
-                    "name": row.get("client_name", "Unknown Client"),
-                    "phone": row.get("client_phone", "Unknown Phone"),
-                    "email": row.get("client_email", "Unknown Email")
+                    "client_id": row.get("client_id", ""),
+                    "name": row.get("client_name", ""),
+                    "phone": row.get("client_phone", ""),
+                    "email": row.get("client_email", "")
                 },
                 "restaurant_details": {
-                    "name": row.get("restaurant_name", "Unknown Restaurant"),
-                    "pickup_address_book_id": row.get("pickupAddressBookId", "Unknown")
+                    "name": row.get("restaurant_name", ""),
+                    "pickup_address_book_id": row.get("pickupAddressBookId", "")
                 },
                 "order_details": {
-                    "order_description": row.get("order_id", "Unknown"),  # Your descriptive order_id
+                    "order_description": row.get("order_id", ""),  # Your descriptive order_id
                     "delivery_frequency": row.get("deliveryFrequency", 0),
-                    "pickup_code": row.get("pickup_code", "Unknown"),
-                    "city": row.get("ADDRESS_CITY_NAME", "Unknown"),
-                    "country": row.get("ADDRESS_COUNTRY", "Unknown"),
-                    "postal_code": row.get("Address_postal_code", "Unknown")
+                    "pickup_code": row.get("pickup_code", ""),
+                    "city": row.get("ADDRESS_CITY_NAME", ""),
+                    "country": row.get("ADDRESS_COUNTRY", ""),
+                    "postal_code": row.get("Address_postal_code", "")
                 }
             })
         else:

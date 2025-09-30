@@ -232,10 +232,20 @@ class DailyDeliveryAutomation:
                 order_details = order.get('order_details', {})
                 order_response = order.get('order_response', {})
                 
-                client_name = client_details.get('name', 'Unknown')
-                order_description = order_details.get('order_description', 'Unknown')
-                glovo_order_id = order_response.get('id', 'N/A')
-                pickup_code = order.get('pickup_order_code', 'N/A')
+                client_name = client_details.get('name', '')
+                order_description = order_details.get('order_description', '')
+                glovo_order_id = order_response.get('id', '')
+                pickup_code = order.get('pickup_order_code', '')
+                
+                # Show actual data or indicate missing data
+                if not client_name:
+                    client_name = '❌ MISSING CLIENT NAME'
+                if not order_description:
+                    order_description = '❌ MISSING ORDER DESCRIPTION'
+                if not glovo_order_id:
+                    glovo_order_id = '❌ ORDER NOT CREATED'
+                if not pickup_code:
+                    pickup_code = '❌ MISSING PICKUP CODE'
                 
                 self.logger.info(f"   • {client_name} - {order_description}")
                 self.logger.info(f"     Glovo Order ID: {glovo_order_id}")
