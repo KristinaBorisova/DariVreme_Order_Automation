@@ -24,7 +24,7 @@ def _write_cache(token: str, expires_in: int):
 def _fetch_new_token() -> str:
     # Use environment variables if available, fallback to hardcoded values
     api_key = os.getenv("API_KEY", "your_api_key_here")
-    api_secret = os.getenv("API_SECRET", "your_api_secret_here"))
+    api_secret = os.getenv("API_SECRET", "your_api_secret_here")
     
     payload = {
         "grantType": "client_credentials",

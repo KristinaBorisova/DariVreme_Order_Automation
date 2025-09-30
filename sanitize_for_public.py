@@ -23,7 +23,7 @@ def sanitize_file(file_path):
         
         # Replace API secrets
         content = re.sub(r'API_SECRET\s*=\s*["\'][^"\']+["\']', 'API_SECRET = os.getenv("API_SECRET", "your_api_secret_here")', content)
-        content = re.sub(r'api_secret\s*=\s*os\.getenv\(["\']API_SECRET["\'],\s*["\'][^"\']+["\']', 'api_secret = os.getenv("API_SECRET", "your_api_secret_here"))', content)
+        content = re.sub(r'api_secret\s*=\s*os\.getenv\(["\']API_SECRET["\'],\s*["\'][^"\']+["\']', 'api_secret = os.getenv("API_SECRET", "your_api_secret_here")', content)
         
         # Replace Google Sheets URLs
         content = re.sub(
@@ -115,7 +115,11 @@ API_KEY=your_api_key_here
 API_SECRET=your_api_secret_here
 
 # Google Sheets Configuration
-GOOGLE_SHEETS_URL=https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit"""
+GOOGLE_SHEETS_URL=https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit
+
+# Optional: Production API (if different)
+# PRODUCTION_TOKEN_URL=https://api.glovoapp.com/oauth/token
+"""
     
     with open('.env.example', 'w') as f:
         f.write(env_example)
