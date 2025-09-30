@@ -42,7 +42,7 @@ jobs:
         echo "Environment variables set successfully"
         
     - name: Test environment variables
-      run: python test_env_vars.py
+      run: python test_env_vars.py 
         
     - name: Test authentication
       run: |

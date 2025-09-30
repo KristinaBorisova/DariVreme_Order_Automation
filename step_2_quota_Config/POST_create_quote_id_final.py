@@ -9,6 +9,8 @@ import json
 import time
 import requests
 from typing import Dict, Any, List, Iterable, Tuple, Optional
+from datetime import datetime, timedelta
+import pytz
 
 URL = "https://stageapi.glovoapp.com/v2/laas/quotes"
 
@@ -25,17 +27,39 @@ HEADERS = {
     "Content-Type": "application/json",
 }
 
+def get_future_pickup_time(hours_ahead: int = 2) -> str:
+    """
+    Generate a pickup time that's in the future.
+    
+    Args:
+        hours_ahead: Number of hours ahead of current time (default: 2)
+        
+    Returns:
+        ISO8601 UTC string for pickup time
+    """
+    # Get current time in UTC
+    now_utc = datetime.now(pytz.UTC)
+    
+    # Add the specified hours
+    future_time = now_utc + timedelta(hours=hours_ahead)
+    
+    # Format as ISO8601 UTC string
+    return future_time.strftime('%Y-%m-%dT%H:%M:%S.%fZ')
+
 def row_to_payload(row: Dict[str, Any]) -> Dict[str, Any]:
     """
     Convert a single row from FINAL_ORDERS sheet to Glovo API payload.
     Uses exact column names from your sheet.
     """
+    # Generate a future pickup time instead of using the sheet data
+    pickup_time = get_future_pickup_time(hours_ahead=2)
+    
     return {
         "pickupDetails": {
             "addressBook": {
                 "id": row["pickupAddressBookId"],
             },
-            "pickupTime": row["pickup_time_utc"],
+            "pickupTime": pickup_time,
         },
         "deliveryAddress": {
             "rawAddress": row["deliveryRawAddress"],
@@ -56,7 +80,7 @@ def validate_row(row: Dict[str, Any]) -> Optional[str]:
     required_fields = [
         "client_id", "client_name", "client_phone", "client_email",
         "deliveryRawAddress", "deliveryLattitude", "deliveryLongitude",
-        "pickupAddressBookId", "pickup_time_utc", "restaurant_name"
+        "pickupAddressBookId", "restaurant_name"
     ]
     
     missing = [k for k in required_fields if k not in row or row[k] in (None, "")]
@@ -70,10 +94,7 @@ def validate_row(row: Dict[str, Any]) -> Optional[str]:
     except (ValueError, TypeError):
         return "deliveryLattitude/deliveryLongitude must be numeric"
     
-    # Validate pickup time format
-    pickup_time = row["pickup_time_utc"]
-    if not isinstance(pickup_time, str) or not pickup_time.endswith("Z"):
-        return "pickup_time_utc must be ISO8601 UTC string ending with 'Z'"
+    # Pickup time is now generated dynamically, no validation needed
     
     # Validate email format (basic check)
     email = row.get("client_email", "")
@@ -138,6 +159,10 @@ def process_orders_final(rows: Iterable[Dict[str, Any]],
         
         # Create payload
         payload = row_to_payload(row)
+        
+        # Log the generated pickup time
+        pickup_time = payload["pickupDetails"]["pickupTime"]
+        print(f"   ⏰ Generated pickup time: {pickup_time}")
         
         # Send quote request
         print(f"   📤 Sending quote request...")
