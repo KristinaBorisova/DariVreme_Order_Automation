@@ -112,11 +112,11 @@ class GoogleSheetsLogger:
         pickup_time = pickup_info.get('pickupTime', 'N/A')
         pickup_order_code = pickup_info.get('pickupOrderCode', 'N/A')
         
-        # Extract contact information
+        # Extract contact information - prioritize client_details over order_data
         contact_info = order_data.get('contact', {})
-        contact_name = contact_info.get('name', client_details.get('name', 'N/A'))
-        contact_phone = contact_info.get('phone', client_details.get('phone', 'N/A'))
-        contact_email = contact_info.get('email', client_details.get('email', 'N/A'))
+        contact_name = client_details.get('name', contact_info.get('name', 'N/A'))
+        contact_phone = client_details.get('phone', contact_info.get('phone', 'N/A'))
+        contact_email = client_details.get('email', contact_info.get('email', 'N/A'))
         
         # Calculate expected delivery time (if available)
         estimated_delivery = order_data.get('estimatedTimeOfArrival', 'N/A')
