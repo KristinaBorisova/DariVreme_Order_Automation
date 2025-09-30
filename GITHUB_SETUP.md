@@ -34,13 +34,7 @@ GLOVO_API_URL = https://stageapi.glovoapp.com
 
 #### **Google Sheets Secret**
 ```
-GOOGLE_SHEETS_URL = https://docs.google.com/spreadsheets/d/1OjOkAol3vXCbk-QPGioUAJnQgPs3t9HQ/edit?usp=sharing&ouid=100766369247091180171&rtpof=true&sd=true
-```
-
-#### **Google Sheets Credentials**
-```
-GOOGLE_SHEETS_CREDENTIALS = {
-  "type": "service_account",
+GOOGLE_SHEETS_URL = https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit"type": "service_account",
   "project_id": "your-project-id",
   "private_key_id": "your-private-key-id",
   "private_key": "-----BEGIN PRIVATE KEY-----\nYOUR_PRIVATE_KEY\n-----END PRIVATE KEY-----\n",
@@ -195,7 +189,7 @@ Processing 5 orders...
 Processing order 1/5 - Quote ID: abc123...
 ✅ Order created successfully for Quote ID: abc123...
 📝 Order logged:
-   Order ID: 100010173030
+   Order ID: 100010000000
    Client: Automated Client
    Status: CREATED
    Price: 8.06 BGN

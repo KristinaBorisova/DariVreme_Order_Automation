@@ -146,7 +146,7 @@ def test_enhanced_order_creation():
         from POST_create_quote_id import row_to_payload
         
         # Load data and create quote
-        google_sheets_url = "https://docs.google.com/spreadsheets/d/1OjOkAol3vXCbk-QPGioUAJnQgPs3t9HQ/edit?usp=sharing&ouid=100766369247091180171&rtpof=true&sd=true"
+        google_sheets_url = "https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit"
         workbook = load_workbook_to_dict(google_sheets_url)
         sheet_name = list(workbook.keys())[0]
         first_order = workbook[sheet_name][0]
@@ -178,8 +178,8 @@ def test_enhanced_order_creation():
         # Test different payload variations
         client_details = {
             "name": "Enhanced Test Client",
-            "phone": "+359888123456",
-            "email": "enhanced@darivreme.com"
+            "phone": "+1234567890",
+            "email": "client@example.com"
         }
         
         quote_data_for_order = {

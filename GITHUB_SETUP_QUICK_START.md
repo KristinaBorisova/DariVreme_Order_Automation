@@ -28,11 +28,7 @@ Add these 4 secrets:
 | `TOKEN_URL` | `https://stageapi.glovoapp.com/v2/laas/oauth/token` |
 | `API_KEY` | `175482686405285` |
 | `API_SECRET` | `dc190e6d0e4f4fc79e4021e4b981e596` |
-| `GOOGLE_SHEETS_URL` | `https://docs.google.com/spreadsheets/d/1OjOkAol3vXCbk-QPGioUAJnQgPs3t9HQ/edit?gid=519498004#gid=519498004` |
-
-### 3. Test the Workflow (1 minute)
-1. Go to **Actions** tab in your repository
-2. Click **"Daily Delivery Automation"**
+| `GOOGLE_SHEETS_URL` | `https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit"Daily Delivery Automation"**
 3. Click **"Run workflow"**
 4. Select **"Run in test mode (dry run)"**
 5. Click **"Run workflow"**

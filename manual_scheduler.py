@@ -21,7 +21,7 @@ def run_automation():
     
     # Initialize automation
     automation = DailyDeliveryAutomation(
-        "https://docs.google.com/spreadsheets/d/1OjOkAol3vXCbk-QPGioUAJnQgPs3t9HQ/edit?gid=519498004#gid=519498004",
+        "https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit",
         "FINAL_ORDERS"
     )
     

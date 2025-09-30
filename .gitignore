@@ -91,3 +91,25 @@ temp/
 
 # GitHub Actions artifacts
 .github/workflows/artifacts/
+# Security - Environment files
+.env
+*.env
+.env.local
+.env.production
+
+# Security - Credentials  
+google_sheets_credentials.json
+*credentials*.json
+*secret*.json
+
+# Security - Logs and results
+logs/
+daily_results/
+*.log
+
+# Security - Cache and temporary files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python

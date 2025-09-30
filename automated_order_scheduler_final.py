@@ -164,7 +164,7 @@ def main():
     print("="*60)
     
     # Configuration
-    GOOGLE_SHEETS_URL = "https://docs.google.com/spreadsheets/d/1OjOkAol3vXCbk-QPGioUAJnQgPs3t9HQ/edit?usp=sharing&ouid=100766369247091180171&rtpof=true&sd=true"
+    GOOGLE_SHEETS_URL = "https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit"
     
     # Initialize scheduler
     scheduler = FinalOrderScheduler(GOOGLE_SHEETS_URL)

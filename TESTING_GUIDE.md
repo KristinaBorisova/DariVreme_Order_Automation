@@ -58,7 +58,7 @@ Access Token in config: eyJhbGci...
 cd ../step_2_quota_Config
 
 # Test with a public Google Sheet
-python sheet_to_json.py "https://docs.google.com/spreadsheets/d/1OjOkAol3vXCbk-QPGioUAJnQgPs3t9HQ/edit?usp=sharing" -o test_json_export
+python sheet_to_json.py "https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit" -o test_json_export
 ```
 
 **Expected Output:**

@@ -81,15 +81,7 @@ API_KEY=your_glovo_api_key_here
 API_SECRET=your_glovo_api_secret_here
 
 # Google Sheets Configuration
-GOOGLE_SHEETS_URL=https://docs.google.com/spreadsheets/d/your_sheet_id/edit#gid=your_gid
-
-# Optional: Email notifications
-EMAIL_USERNAME=your_email@example.com
-EMAIL_PASSWORD=your_app_password
-
-# Optional: Slack notifications
-SLACK_WEBHOOK=https://hooks.slack.com/services/your/webhook/url
-"""
+GOOGLE_SHEETS_URL=https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit"""
     
     env_file = Path('.env.example')
     if not env_file.exists():

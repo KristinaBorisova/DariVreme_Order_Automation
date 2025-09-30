@@ -93,64 +93,7 @@ sudo systemctl start daily-delivery-automation.service
 ### Google Sheets URL
 The system uses your FINAL_ORDERS sheet:
 ```
-https://docs.google.com/spreadsheets/d/1OjOkAol3vXCbk-QPGioUAJnQgPs3t9HQ/edit?gid=519498004#gid=519498004
-```
-
-### Cron Schedule
-- **Time**: 9:00 AM every weekday
-- **Days**: Monday-Friday (1-5)
-- **Command**: `0 9 * * 1-5`
-
-### Rate Limiting
-- **Quote Creation**: 2 requests/second
-- **Order Creation**: 2 requests/second
-- **Delay Between Orders**: 0.5 seconds
-
-## 📊 Monitoring
-
-### Log Files
-- **Main Log**: `/tmp/daily_delivery_automation.log`
-- **Detailed Logs**: `logs/daily_delivery_YYYYMMDD.log`
-- **Results**: `daily_results/daily_automation_YYYYMMDD_HHMMSS.json`
-
-### Log Levels
-- **INFO**: Normal operations, successful orders
-- **WARNING**: Non-critical issues, skipped clients
-- **ERROR**: Critical failures, API errors
-
-### Sample Log Output
-```
-2025-09-13 09:00:01 - INFO - 🤖 Starting Daily Delivery Automation
-2025-09-13 09:00:01 - INFO - 📅 Today is Monday (weekday 0)
-2025-09-13 09:00:01 - INFO - 📋 Filtered 4 orders for Monday
-2025-09-13 09:00:01 - INFO - ✅ Client Яна Димитрова (frequency=3) scheduled for Monday
-2025-09-13 09:00:01 - INFO - ✅ Client Панчо (frequency=5) scheduled for Monday
-2025-09-13 09:00:01 - INFO - ✅ Client Криси (frequency=3) scheduled for Monday
-2025-09-13 09:00:01 - INFO - ✅ Client Робърт (frequency=3) scheduled for Monday
-2025-09-13 09:00:02 - INFO - 💰 Step 1: Creating quotes...
-2025-09-13 09:00:05 - INFO - ✅ Created 4 successful quotes
-2025-09-13 09:00:05 - INFO - 📦 Step 2: Creating orders...
-2025-09-13 09:00:10 - INFO - ✅ Order created successfully!
-2025-09-13 09:00:10 - INFO - 📋 Glovo Order ID: 100010173030
-2025-09-13 09:00:10 - INFO - 🏷️ Pickup Code: ORD17577797161
-```
-
-## 🛠️ Troubleshooting
-
-### Common Issues
-
-1. **No orders scheduled for today**
-   - Check if today is a weekend (Saturday/Sunday)
-   - Verify client delivery frequencies in FINAL_ORDERS sheet
-
-2. **Authentication errors**
-   - Run `cd step_1_authentication && python token_service.py`
-   - Check if credentials are valid
-
-3. **Google Sheets access issues**
-   - Verify the sheet URL is correct
-   - Check if the sheet is publicly accessible
-   - Ensure the sheet name is "FINAL_ORDERS"
+https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit"FINAL_ORDERS"
 
 4. **Cron job not running**
    - Check cron service: `sudo systemctl status cron`

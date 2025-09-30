@@ -391,7 +391,7 @@ if __name__ == "__main__":
     print("\n🚀 Starting Order Creation (FINAL_ORDERS Sheet)")
     print("="*60)
     
-    google_sheets_url = "https://docs.google.com/spreadsheets/d/1OjOkAol3vXCbk-QPGioUAJnQgPs3t9HQ/edit?usp=sharing&ouid=100766369247091180171&rtpof=true&sd=true"
+    google_sheets_url = "https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit"
     
     results = process_orders_from_quotes_final(
         quote_data_list=quote_data_list,
@@ -409,7 +409,7 @@ if __name__ == "__main__":
     if results.get('google_sheets_success'):
         print(f"\n📊 Order results saved to Google Sheets!")
         print("   Sheet: 'Glovo-Orders-Summary'")
-        print("   URL: https://docs.google.com/spreadsheets/d/1OjOkAol3vXCbk-QPGioUAJnQgPs3t9HQ/edit")
+        print("   URL: https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit")
     elif results.get('excel_file'):
         print(f"\n📊 Order results saved to Excel: {results['excel_file']}")
     

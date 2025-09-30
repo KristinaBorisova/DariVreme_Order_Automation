@@ -9,7 +9,7 @@ Convert a public Google Sheet (URL) or a local .xlsx to JSON.
     data = load_workbook_to_dict(url_or_path)  # in-memory dict
 
 - CLI usage:
-    python sheet_to_json.py "https://docs.google.com/spreadsheets/d/XXX/edit?usp=sharing" -o json_export
+    python sheet_to_json.py "https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit" -o json_export
 """
 import argparse
 import io

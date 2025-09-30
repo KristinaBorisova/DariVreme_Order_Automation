@@ -23,34 +23,7 @@ Add these secrets:
 | `TOKEN_URL` | Glovo API token URL | `https://stageapi.glovoapp.com/v2/laas/oauth/token` |
 | `API_KEY` | Your Glovo API key | `175482686405285` |
 | `API_SECRET` | Your Glovo API secret | `dc190e6d0e4f4fc79e4021e4b981e596` |
-| `GOOGLE_SHEETS_URL` | Your Google Sheets URL | `https://docs.google.com/spreadsheets/d/1OjOkAol3vXCbk-QPGioUAJnQgPs3t9HQ/edit?gid=519498004#gid=519498004` |
-
-### 2. Update requirements.txt
-
-Make sure your `requirements.txt` includes all necessary packages:
-
-```txt
-requests>=2.31.0
-pandas>=2.0.0
-openpyxl>=3.1.0
-google-auth>=2.23.0
-google-auth-oauthlib>=1.1.0
-google-auth-httplib2>=0.1.1
-google-api-python-client>=2.100.0
-```
-
-### 3. Verify Workflow File
-
-The workflow file is already created at:
-```
-.github/workflows/daily-delivery-automation.yml
-```
-
-### 4. Test the Workflow
-
-#### Manual Test (Recommended First)
-1. Go to your repository → Actions tab
-2. Click on "Daily Delivery Automation"
+| `GOOGLE_SHEETS_URL` | Your Google Sheets URL | `https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit"Daily Delivery Automation"
 3. Click "Run workflow"
 4. Select "Run in test mode (dry run)" to test without creating actual orders
 5. Click "Run workflow"

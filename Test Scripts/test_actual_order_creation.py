@@ -23,7 +23,7 @@ def test_actual_order_creation():
         print("1️⃣ Loading real data from Excel...")
         from sheet_to_json import load_workbook_to_dict
         
-        google_sheets_url = os.getenv('GOOGLE_SHEETS_URL', 'https://docs.google.com/spreadsheets/d/1OjOkAol3vXCbk-QPGioUAJnQgPs3t9HQ/edit?gid=519498004#gid=519498004')
+        google_sheets_url = os.getenv('GOOGLE_SHEETS_URL', 'https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit')
         workbook = load_workbook_to_dict(google_sheets_url)
         orders = workbook['FINAL_ORDERS']
         

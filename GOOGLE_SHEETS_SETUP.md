@@ -52,9 +52,7 @@ Instead of creating local Excel files, the system will now save order results di
 ### **Step 5: Share Your Spreadsheet**
 
 1. Open your Google Sheets document:
-   [https://docs.google.com/spreadsheets/d/1OjOkAol3vXCbk-QPGioUAJnQgPs3t9HQ/edit](https://docs.google.com/spreadsheets/d/1OjOkAol3vXCbk-QPGioUAJnQgPs3t9HQ/edit)
-
-2. Click "Share" button (top right)
+   [https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit"Share" button (top right)
 3. Add the service account email (from the JSON file, field `client_email`)
 4. Give it "Editor" permissions
 5. Click "Send"
@@ -89,13 +87,13 @@ The system will automatically log the following information to the "Glovo-Orders
 | Column | Description | Example |
 |--------|-------------|---------|
 | Timestamp | Order creation time | 2025-01-15 14:30:25 |
-| Order ID | Glovo tracking number | 100010173030 |
-| Quote ID | Quote identifier | aff76702-e284-43ab-8ae2-78d0d605d285 |
+| Order ID | Glovo tracking number | 100010000000 |
+| Quote ID | Quote identifier | 12345678-1234-1234-1234-123456789012 |
 | Order State | Current status | CREATED |
 | Client Name | Client name | Test Client |
-| Client Phone | Client phone | +359888123456 |
-| Client Email | Client email | test@darivreme.com |
-| Pickup Address Book ID | Pickup location ID | dd560a2c-f1b5-43b7-81bc-2830595122f9 |
+| Client Phone | Client phone | +1234567890 |
+| Client Email | Client email | client@example.com |
+| Pickup Address Book ID | Pickup location ID | 12345678-1234-1234-1234-123456789012 |
 | Pickup Time | Scheduled pickup | 2025-01-15T15:30:00Z |
 | Expected Delivery | Expected delivery time | 2025-01-15T16:00:00Z |
 | Delivery Address | Full delivery address | g.k. Strelbishte, Nishava St 111р 1408, Bulgaria |
@@ -105,7 +103,7 @@ The system will automatically log the following information to the "Glovo-Orders
 | Created At | API creation time | 2025-01-15T14:30:25Z |
 | Delivery Latitude | Delivery latitude | 42.673758 |
 | Delivery Longitude | Delivery longitude | 23.298064 |
-| Partner ID | Glovo partner ID | 67915107 |
+| Partner ID | Glovo partner ID | 12345678 |
 | City Code | City code | SOF |
 | Cancellable | Can be cancelled | TRUE |
 
@@ -149,33 +147,15 @@ When everything is working correctly, you'll see:
 ```
 ✅ Google Sheets logging enabled
 📝 Order logged:
-   Order ID: 100010173030
+   Order ID: 100010000000
    Client: Test Client
    Status: CREATED
    Price: 8.06 BGN
 
 ✅ Successfully saved 1 orders to Google Sheets
 📊 Sheet: Glovo-Orders-Summary
-🔗 URL: https://docs.google.com/spreadsheets/d/1OjOkAol3vXCbk-QPGioUAJnQgPs3t9HQ/edit
-
-📊 Order Summary:
-   Total Orders: 1
-   Total Value: 8.06 BGN
-   Unique Clients: 1
-   Unique Pickup Locations: 1
-   Orders by Status:
-     CREATED: 1
-   Date Range: 2025-01-15 14:30:25 to 2025-01-15 14:30:25
-
-📊 Order results saved to Google Sheets!
-   Sheet: 'Glovo-Orders-Summary'
-   URL: https://docs.google.com/spreadsheets/d/1OjOkAol3vXCbk-QPGioUAJnQgPs3t9HQ/edit
-```
-
-## 🔒 **Security Notes**
-
-- Keep your `google_sheets_credentials.json` file secure
-- Don't commit it to version control
+🔗 URL: https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit'Glovo-Orders-Summary'
+   URL: https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit't commit it to version control
 - The service account has limited permissions (only to your specific spreadsheet)
 - You can revoke access anytime from Google Cloud Console
 

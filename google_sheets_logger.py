@@ -283,28 +283,28 @@ def test_google_sheets_logger():
     print("=" * 50)
     
     # Your Google Sheets URL
-    spreadsheet_url = "https://docs.google.com/spreadsheets/d/1OjOkAol3vXCbk-QPGioUAJnQgPs3t9HQ/edit?usp=sharing&ouid=100766369247091180171&rtpof=true&sd=true"
+    spreadsheet_url = "https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit"
     
     # Create sample order data
     sample_order_data = {
-        "trackingNumber": "100010173030",
+        "trackingNumber": "100010000000",
         "status": {
             "state": "CREATED",
             "createdAt": "2025-09-06T15:39:34.131323196Z"
         },
         "quote": {
-            "quoteId": "aff76702-e284-43ab-8ae2-78d0d605d285",
+            "quoteId": "12345678-1234-1234-1234-123456789012",
             "quotePrice": 8.06,
             "currencyCode": "BGN"
         },
         "contact": {
             "name": "Test Client",
-            "phone": "+359888123456",
-            "email": "test@darivreme.com"
+            "phone": "+1234567890",
+            "email": "client@example.com"
         },
         "pickupDetails": {
             "addressBook": {
-                "id": "dd560a2c-f1b5-43b7-81bc-2830595122f9"
+                "id": "12345678-1234-1234-1234-123456789012"
             },
             "pickupTime": "2025-09-06T20:15:22Z",
             "pickupOrderCode": "ORD123456"
@@ -316,15 +316,15 @@ def test_google_sheets_logger():
                 "longitude": 23.298064
             }
         },
-        "partnerId": 67915107,
+        "partnerId": 12345678,
         "cityCode": "SOF",
         "cancellable": True
     }
     
     sample_quote_data = {
-        "quote_id": "aff76702-e284-43ab-8ae2-78d0d605d285",
+        "quote_id": "12345678-1234-1234-1234-123456789012",
         "original_row": {
-            "pickupAddressBookId": "dd560a2c-f1b5-43b7-81bc-2830595122f9",
+            "pickupAddressBookId": "12345678-1234-1234-1234-123456789012",
             "pickupTimeUtc": "2025-09-06T20:15:22Z",
             "deliveryRawAddress": "g.k. Strelbishte, Nishava St 111р 1408, Bulgaria"
         }
@@ -332,8 +332,8 @@ def test_google_sheets_logger():
     
     sample_client_details = {
         "name": "Test Client",
-        "phone": "+359888123456",
-        "email": "test@darivreme.com"
+        "phone": "+1234567890",
+        "email": "client@example.com"
     }
     
     # Test logger

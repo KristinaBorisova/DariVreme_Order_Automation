@@ -20,7 +20,7 @@ def validate_excel_data():
         from sheet_to_json import load_workbook_to_dict
         
         # Load the Google Sheets data
-        google_sheets_url = os.getenv('GOOGLE_SHEETS_URL', 'https://docs.google.com/spreadsheets/d/1OjOkAol3vXCbk-QPGioUAJnQgPs3t9HQ/edit?gid=519498004#gid=519498004')
+        google_sheets_url = os.getenv('GOOGLE_SHEETS_URL', 'https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit')
         
         print(f"📊 Loading data from Google Sheets...")
         workbook = load_workbook_to_dict(google_sheets_url)

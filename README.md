@@ -38,7 +38,7 @@ Glovo_DariVreme_Order_Automation/
 ```python
 API_URL = "https://stageapi.glovoapp.com/oauth/token"  # Glovo OAuth endpoint
 API_KEY = "your_api_key"                               # API key placeholder
-API_SECRET = "your_api_secret"                         # API secret placeholder
+API_SECRET = os.getenv("API_SECRET", "your_api_secret_here")                         # API secret placeholder
 Access_Token = []                                      # List to store access tokens
 ```
 
@@ -154,7 +154,7 @@ def load_workbook_to_dict(input_source: str)                     # Load to memor
 **Structure**:
 ```python
 # Example usage
-url = "https://docs.google.com/spreadsheets/d/1OjOkAol3vXCbk-QPGioUAJnQgPs3t9HQ/edit?usp=sharing"
+url = "https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit"
 data = load_workbook_to_dict(url)
 ```
 
@@ -301,7 +301,7 @@ def save_order_results(results, output_file)                             # Save 
   "contact": {
     "name": "DariVreme Client",
     "phone": "+1234567890",
-    "email": "client@darivreme.com"
+    "email": "client@example.com"
   },
   "pickupOrderCode": "ORD1705321234567"
 }
@@ -354,7 +354,7 @@ python step_1_authentication/1_glovo_auth_helper.py
 ### 2. Data Processing
 ```bash
 # Convert Google Sheets to JSON
-python step_2_quota_Config/sheet_to_json.py "https://docs.google.com/spreadsheets/d/XXX/edit?usp=sharing" -o json_export
+python step_2_quota_Config/sheet_to_json.py "https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit" -o json_export
 
 # Process data and create quotes
 python step_2_quota_Config/POST_create_quote_id.py

@@ -22,7 +22,7 @@ def main():
     print("=" * 60)
 
     # Configuration
-    GOOGLE_SHEETS_URL = "https://docs.google.com/spreadsheets/d/1OjOkAol3vXCbk-QPGioUAJnQgPs3t9HQ/edit?usp=sharing&ouid=100766369247091180171&rtpof=true&sd=true"
+    GOOGLE_SHEETS_URL = "https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit"
 
     try:
         # Step 1: Authentication
@@ -240,7 +240,7 @@ def validate_environment():
     # Check if Google Sheets is accessible
     try:
         import requests
-        test_url = "https://docs.google.com/spreadsheets/d/1OjOkAol3vXCbk-QPGioUAJnQgPs3t9HQ/export?format=xlsx"
+        test_url = "https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit"
         response = requests.head(test_url, timeout=10)
         if response.status_code == 200:
             print("✅ Google Sheets is accessible")

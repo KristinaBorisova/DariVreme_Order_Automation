@@ -18,25 +18,7 @@ Automated food delivery order processing system that integrates with Glovo's API
 **URL:** `https://github.com/KristinaBorisova/Glovo_DariVreme_Order_Automation`
 
 ### Google Sheets
-**URL:** `https://docs.google.com/spreadsheets/d/1OjOkAol3vXCbk-QPGioUAJnQgPs3t9HQ/edit?gid=519498004#gid=519498004`
-**Sheet Name:** `FINAL_ORDERS`
-
-### Glovo API
-**Environment:** Staging (`stageapi.glovoapp.com`)
-**Authentication:** OAuth 2.0 Client Credentials
-
----
-
-## ⚡ How to Trigger
-
-### Automatic (Recommended)
-- **Schedule:** Every weekday at 9:00 AM UTC
-- **Location:** GitHub Actions automatically runs
-- **No action required**
-
-### Manual Trigger
-1. Go to GitHub repository → **Actions** tab
-2. Click **"Daily Delivery Automation"**
+**URL:** `https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit"Daily Delivery Automation"**
 3. Click **"Run workflow"**
 4. Select **"Run in test mode"** (optional)
 5. Click **"Run workflow"**

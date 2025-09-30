@@ -31,7 +31,7 @@ except ImportError as e:
     exit(1)
 
 # Configuration
-GOOGLE_SHEETS_URL = "https://docs.google.com/spreadsheets/d/1OjOkAol3vXCbk-QPGioUAJnQgPs3t9HQ/edit?gid=519498004#gid=519498004"
+GOOGLE_SHEETS_URL = os.getenv('GOOGLE_SHEETS_URL', 'https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit')
 SHEET_NAME = "FINAL_ORDERS"
 
 # Delivery frequency mapping

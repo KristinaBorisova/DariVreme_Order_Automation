@@ -1,5 +1,5 @@
 # config.py
 API_URL = "https://stageapi.glovoapp.com/oauth/token"
 API_KEY = "your_api_key"
-API_SECRET = "your_api_secret"
+API_SECRET = os.getenv("API_SECRET", "your_api_secret_here")
 Access_Token = []
