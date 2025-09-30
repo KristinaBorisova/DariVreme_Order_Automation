@@ -146,7 +146,7 @@ python test_order_creation.py
 #### "PICKUP_TIME_MUST_BE_GREATER_THAN_CURRENT_TIME"
 **Solution:** Update pickup times to future dates
 ```bash
-python fix_pickup_times.py
+python "Test Scripts/fix_pickup_times.py"
 ```
 
 #### "Default Client" in orders
@@ -186,13 +186,13 @@ python fix_pickup_times.py
 ### Debug Commands
 ```bash
 # Test environment variables
-python test_env_vars.py
+python "Test Scripts/test_env_vars.py"
 
 # Test all components
-python test_github_actions.py
+python "Test Scripts/test_automation.py"
 
-# Test weekday logic
-python test_weekday_automation.py
+# Test weekday logic (now included in test_automation.py)
+python "Test Scripts/test_automation.py"
 ```
 
 ---

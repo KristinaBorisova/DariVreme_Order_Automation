@@ -42,7 +42,7 @@ jobs:
         echo "Environment variables set successfully"
         
     - name: Test environment variables
-      run: python test_env_vars.py 
+      run: python "Test Scripts/test_env_vars.py" 
         
     - name: Test authentication
       run: |
@@ -56,7 +56,7 @@ jobs:
           python daily_delivery_automation.py
         elif [ "${{ github.event.inputs.run_mode }}" = "test" ]; then
           echo "🧪 Manual trigger → test mode"
-          python test_automation.py
+            python "Test Scripts/test_automation.py"
         else
           echo "🚀 Manual trigger → real mode"
           python daily_delivery_automation.py

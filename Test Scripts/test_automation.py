@@ -45,8 +45,8 @@ def test_authentication():
     print("="*50)
     
     try:
-        # Add path for imports
-        sys.path.append(os.path.join(os.path.dirname(__file__), 'step_1_authentication'))
+        # Add path for imports (go up one directory from Test Scripts)
+        sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'step_1_authentication'))
         from token_service import get_bearer_token
         
         print("📤 Requesting bearer token...")
@@ -71,6 +71,7 @@ def test_pickup_time_generation():
     print("="*50)
     
     try:
+        # Import from the same directory (Test Scripts)
         from fix_pickup_times import get_future_pickup_time, validate_pickup_time
         
         # Test future pickup time generation
@@ -93,7 +94,8 @@ def test_google_sheets_connection():
     print("="*50)
     
     try:
-        sys.path.append(os.path.join(os.path.dirname(__file__), 'step_2_quota_Config'))
+        # Add path for imports (go up one directory from Test Scripts)
+        sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'step_2_quota_Config'))
         from sheet_to_json import load_workbook_to_dict
         
         google_sheets_url = os.getenv('GOOGLE_SHEETS_URL')
