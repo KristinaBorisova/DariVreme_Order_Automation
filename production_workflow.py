@@ -43,8 +43,8 @@ def main():
         print("\n📊 Step 2: Loading data from Google Sheets")
         print("-" * 30)
 
-        from sheet_to_json import load_workbook_to_dict
-        from POST_create_quote_id import process_orders, iter_orders_from_memory
+        from step_2_quota_Config.sheet_to_json import load_workbook_to_dict
+        from step_2_quota_Config.POST_create_quote_id_final import process_orders, iter_orders_from_memory
 
         print(f"Loading from: {GOOGLE_SHEETS_URL}")
         workbook = load_workbook_to_dict(GOOGLE_SHEETS_URL)

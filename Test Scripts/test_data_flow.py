@@ -18,7 +18,7 @@ def test_quote_data_structure():
     print("="*50)
     
     try:
-        from POST_create_quote_id_final import row_to_payload, validate_row
+        from step_2_quota_Config.POST_create_quote_id_final import row_to_payload, validate_row
         
         # Create a test order (without making API calls)
         test_order = {

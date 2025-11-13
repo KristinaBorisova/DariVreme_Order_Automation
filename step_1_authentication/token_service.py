@@ -1,5 +1,9 @@
 import os, json, time, pathlib, requests, config as config
 from typing import Optional
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 TOKEN_URL = os.getenv("TOKEN_URL", config.API_URL)
 CACHE_PATH = pathlib.Path(os.getenv("TOKEN_CACHE_FILE", "~/.cache/myapp/token.json")).expanduser()

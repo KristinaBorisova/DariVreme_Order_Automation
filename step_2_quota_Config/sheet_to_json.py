@@ -4,7 +4,7 @@ sheet_to_json.py
 Convert a public Google Sheet (URL) or a local .xlsx to JSON.
 
 - import usage:
-    from sheet_to_json import convert_sheet_to_json, load_workbook_to_dict
+    from step_2_quota_Config.sheet_to_json import convert_sheet_to_json, load_workbook_to_dict
     convert_sheet_to_json(url_or_path, outdir="json_export")
     data = load_workbook_to_dict(url_or_path)  # in-memory dict
 

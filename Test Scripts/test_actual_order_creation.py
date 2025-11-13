@@ -21,7 +21,7 @@ def test_actual_order_creation():
     try:
         # Test 1: Load real data from Excel
         print("1️⃣ Loading real data from Excel...")
-        from sheet_to_json import load_workbook_to_dict
+        from step_2_quota_Config.sheet_to_json import load_workbook_to_dict
         
         google_sheets_url = os.getenv('GOOGLE_SHEETS_URL', 'https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit')
         workbook = load_workbook_to_dict(google_sheets_url)

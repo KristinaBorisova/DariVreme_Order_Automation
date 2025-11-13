@@ -6,6 +6,9 @@ Test script to verify environment variables are set correctly.
 
 import os
 
+from dotenv import load_dotenv
+load_dotenv()
+
 def test_environment_variables():
     """Test if all required environment variables are set."""
     print("🧪 Testing Environment Variables")

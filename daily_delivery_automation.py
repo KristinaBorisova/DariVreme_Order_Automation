@@ -22,8 +22,8 @@ sys.path.append(os.path.join(os.path.dirname(__file__), 'step_3_send_order_with_
 # Import required modules
 try:
     from step_1_authentication.token_service import get_bearer_token
-    from sheet_to_json import load_workbook_to_dict
-    from POST_create_quote_id_final import process_orders_final
+    from step_2_quota_Config.sheet_to_json import load_workbook_to_dict
+    from step_2_quota_Config.POST_create_quote_id_final import process_orders_final
     from send_order_with_quote_id_final import process_orders_from_quotes_final
 except ImportError as e:
     print(f"❌ Error importing required modules: {e}")

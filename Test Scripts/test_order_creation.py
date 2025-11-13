@@ -30,7 +30,7 @@ def test_order_creation_flow():
         
         # Test 2: Quote Creation
         print("\n2️⃣ Testing Quote Creation...")
-        from POST_create_quote_id_final import process_orders_final
+        from step_2_quota_Config.POST_create_quote_id_final import process_orders_final
         
         # Create a test order
         test_order = {
