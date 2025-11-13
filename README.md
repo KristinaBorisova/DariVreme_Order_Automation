@@ -69,16 +69,17 @@ Create a `.env` file or set environment variables:
 
 ```bash
 # Copy the example file
-cp env.example .env
+cp env.example .env 
+#TODO QUESTION - env.example or .env.example ? Which is latest?
 
 # Edit .env with your credentials
 ```
 
 Required environment variables:
 ```bash
-TOKEN_URL=https://stageapi.glovoapp.com/oauth/token
-API_KEY=your_api_key_here
-API_SECRET=your_api_secret_here
+TOKEN_URL=https://stageapi.glovoapp.com/oauth/token #TODO let's rename to GLOVO_OAUTH_TOKEN_URL
+API_KEY=your_api_key_here #TODO rename to #GLOVO_API_KEY
+API_SECRET=your_api_secret_here #TODO rename to #GLOVO_API_SECRET
 GOOGLE_SHEETS_URL=https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit
 ```
 
