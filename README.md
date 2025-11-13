@@ -192,20 +192,7 @@ GOOGLE_SHEETS_URL=https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edi
 TOKEN_CACHE_FILE=~/.cache/myapp/token.json
 ```
 
-**Alternative: Set environment variables directly:**
-```bash
-# macOS/Linux
-export TOKEN_URL="https://stageapi.glovoapp.com/oauth/token"
-export API_KEY="your_api_key"
-export API_SECRET="your_api_secret"
-export GOOGLE_SHEETS_URL="https://docs.google.com/spreadsheets/d/YOUR_ID/edit"
-
-# Windows (PowerShell)
-$env:TOKEN_URL="https://stageapi.glovoapp.com/oauth/token"
-$env:API_KEY="your_api_key"
-$env:API_SECRET="your_api_secret"
-$env:GOOGLE_SHEETS_URL="https://docs.google.com/spreadsheets/d/YOUR_ID/edit"
-```
+#TODO imho it should be all read from the .env for locally and sys env for github actions
 
 #### 5. Set Up Google Sheets Credentials
 
