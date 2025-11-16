@@ -69,20 +69,9 @@ Create a `.env` file or set environment variables:
 
 ```bash
 # Copy the example file
-cp env.example .env 
-#TODO QUESTION - env.example or .env.example ? Which is latest?
-
+cp .env.example .env 
 # Edit .env with your credentials
 ```
-
-Required environment variables:
-```bash
-TOKEN_URL=https://stageapi.glovoapp.com/oauth/token #TODO let's rename to GLOVO_OAUTH_TOKEN_URL
-API_KEY=your_api_key_here #TODO rename to #GLOVO_API_KEY
-API_SECRET=your_api_secret_here #TODO rename to #GLOVO_API_SECRET
-GOOGLE_SHEETS_URL=https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit
-```
-
 ### 3. Google Sheets Setup
 
 1. **Create a Google Cloud Project** and enable Google Sheets API
@@ -161,38 +150,6 @@ pip install -r requirements.txt
 # Verify installation
 pip list
 ```
-
-#### 4. Configure Environment Variables
-
-```bash
-# Copy the example environment file
-cp env.example .env
-
-# Edit .env file with your credentials
-# On macOS/Linux:
-nano .env
-# or
-vim .env
-
-# On Windows:
-notepad .env
-```
-
-**Required variables in `.env`:**
-```bash
-# Glovo API Configuration
-TOKEN_URL=https://stageapi.glovoapp.com/oauth/token
-API_KEY=your_actual_api_key_here
-API_SECRET=your_actual_api_secret_here
-
-# Google Sheets Configuration
-GOOGLE_SHEETS_URL=https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit
-
-# Optional: Token cache location
-TOKEN_CACHE_FILE=~/.cache/myapp/token.json
-```
-
-#TODO imho it should be all read from the .env for locally and sys env for github actions
 
 #### 5. Set Up Google Sheets Credentials
 
