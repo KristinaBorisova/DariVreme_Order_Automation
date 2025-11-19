@@ -17,7 +17,7 @@ URL = "https://stageapi.glovoapp.com/v2/laas/quotes"
 # Import token service from step 1
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'step_1_authentication'))
-from token_service import get_bearer_token
+from step_1_authentication.token_service import get_bearer_token
 
 # Get token from authentication module
 TOKEN = get_bearer_token()
@@ -273,7 +273,7 @@ def load_orders_from_final_sheet(google_sheets_url: str, sheet_name: str = "FINA
     Load orders from FINAL_ORDERS sheet with exact column names.
     """
     try:
-        from sheet_to_json import load_workbook_to_dict
+        from step_2_quota_Config.sheet_to_json import load_workbook_to_dict
     except ImportError as e:
         print(f"❌ Error importing sheet_to_json: {e}")
         return []

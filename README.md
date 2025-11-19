@@ -69,19 +69,9 @@ Create a `.env` file or set environment variables:
 
 ```bash
 # Copy the example file
-cp env.example .env
-
+cp .env.example .env 
 # Edit .env with your credentials
 ```
-
-Required environment variables:
-```bash
-TOKEN_URL=https://stageapi.glovoapp.com/oauth/token
-API_KEY=your_api_key_here
-API_SECRET=your_api_secret_here
-GOOGLE_SHEETS_URL=https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit
-```
-
 ### 3. Google Sheets Setup
 
 1. **Create a Google Cloud Project** and enable Google Sheets API
@@ -159,51 +149,6 @@ pip install -r requirements.txt
 
 # Verify installation
 pip list
-```
-
-#### 4. Configure Environment Variables
-
-```bash
-# Copy the example environment file
-cp env.example .env
-
-# Edit .env file with your credentials
-# On macOS/Linux:
-nano .env
-# or
-vim .env
-
-# On Windows:
-notepad .env
-```
-
-**Required variables in `.env`:**
-```bash
-# Glovo API Configuration
-TOKEN_URL=https://stageapi.glovoapp.com/oauth/token
-API_KEY=your_actual_api_key_here
-API_SECRET=your_actual_api_secret_here
-
-# Google Sheets Configuration
-GOOGLE_SHEETS_URL=https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit
-
-# Optional: Token cache location
-TOKEN_CACHE_FILE=~/.cache/myapp/token.json
-```
-
-**Alternative: Set environment variables directly:**
-```bash
-# macOS/Linux
-export TOKEN_URL="https://stageapi.glovoapp.com/oauth/token"
-export API_KEY="your_api_key"
-export API_SECRET="your_api_secret"
-export GOOGLE_SHEETS_URL="https://docs.google.com/spreadsheets/d/YOUR_ID/edit"
-
-# Windows (PowerShell)
-$env:TOKEN_URL="https://stageapi.glovoapp.com/oauth/token"
-$env:API_KEY="your_api_key"
-$env:API_SECRET="your_api_secret"
-$env:GOOGLE_SHEETS_URL="https://docs.google.com/spreadsheets/d/YOUR_ID/edit"
 ```
 
 #### 5. Set Up Google Sheets Credentials

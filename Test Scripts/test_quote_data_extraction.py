@@ -17,7 +17,7 @@ def test_quote_data_extraction():
     print("="*50)
     
     try:
-        from sheet_to_json import load_workbook_to_dict
+        from step_2_quota_Config.sheet_to_json import load_workbook_to_dict
         
         # Load the Google Sheets data
         google_sheets_url = os.getenv('GOOGLE_SHEETS_URL', 'https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit')
