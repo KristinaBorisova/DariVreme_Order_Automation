@@ -75,9 +75,18 @@ cp .env.example .env
 ### 3. Google Sheets Setup
 
 1. **Create a Google Cloud Project** and enable Google Sheets API
-2. **Create a Service Account** and download credentials JSON
-3. **Share your Google Sheet** with the service account email
-4. **Place credentials** as `google_sheets_credentials.json` in project root
+   - https://console.cloud.google.com/welcome?cloudshell=true&project=gen-lang-client-0636078057
+2. **Create a Service Account** and download credentials JSON 
+   - https://console.cloud.google.com/iam-admin/serviceaccounts/create?previousPage=%2Fapis%2Fcredentials%3Fproject%3Dgen-lang-client-0636078057&project=gen-lang-client-0636078057
+3. Create API keys:
+   - https://console.cloud.google.com/iam-admin/serviceaccounts/details/110110425255164015265;edit=true/keys?chat=true&project=gen-lang-client-0636078057
+   -  Go to the Keys tab
+      Add a new key -> Create new key .
+      Choose JSON key type: In the dialog that appears, select JSON as the key type.
+      Create and download: Click Create
+4. **Share your Google Sheet** with the service account email
+   - https://docs.google.com/spreadsheets/d/1OjOkAol3vXCbk-QPGioUAJnQgPs3t9HQ/edit?gid=45849118#gid=45849118
+5  **Place credentials** as `google_sheets_credentials.json` in project root
 
 See detailed setup in the [Google Sheets Integration](#google-sheets-integration) section below.
 
