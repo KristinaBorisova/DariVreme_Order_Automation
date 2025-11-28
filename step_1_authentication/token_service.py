@@ -1,4 +1,4 @@
-import os, json, time, pathlib, requests, config as config
+import os, json, time, pathlib, requests, step_1_authentication.config as config
 from typing import Optional
 from dotenv import load_dotenv
 

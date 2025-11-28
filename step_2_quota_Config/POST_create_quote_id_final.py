@@ -299,7 +299,7 @@ def load_orders_from_final_sheet(google_sheets_url: str, sheet_name: str = "FINA
 
 if __name__ == "__main__":
     # Load orders from FINAL_ORDERS sheet
-    google_sheets_url = "https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit"
+    google_sheets_url = os.getenv('GOOGLE_SHEETS_URL', 'https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit')
     
     print("📊 Loading orders from FINAL_ORDERS sheet...")
     orders = load_orders_from_final_sheet(google_sheets_url, "FINAL_ORDERS")
