@@ -146,7 +146,7 @@ def test_enhanced_order_creation():
         from step_2_quota_Config.POST_create_quote_id_final import row_to_payload
         
         # Load data and create quote
-        google_sheets_url = "https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit"
+        google_sheets_url = os.getenv('GOOGLE_SHEETS_URL', 'https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit')
         workbook = load_workbook_to_dict(google_sheets_url)
         sheet_name = list(workbook.keys())[0]
         first_order = workbook[sheet_name][0]

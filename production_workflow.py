@@ -22,7 +22,7 @@ def main():
     print("=" * 60)
 
     # Configuration
-    GOOGLE_SHEETS_URL = "https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit"
+    GOOGLE_SHEETS_URL = os.getenv('GOOGLE_SHEETS_URL', 'https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit')
 
     try:
         # Step 1: Authentication
