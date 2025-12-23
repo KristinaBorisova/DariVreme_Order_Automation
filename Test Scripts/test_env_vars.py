@@ -79,8 +79,6 @@ def main():
     # Test token URL if available
     if env_ok:
         test_token_url()
-    
-    if env_ok:
         print("\n✅ All tests passed!")
         return 0
     else:

@@ -1,9 +1,5 @@
-import os, json, time, pathlib, requests, step_1_authentication.config as config
+import os, json, time, pathlib, requests, config as config
 from typing import Optional
-from dotenv import load_dotenv
-
-# Load environment variables from .env file
-load_dotenv()
 
 CACHE_PATH = pathlib.Path(os.getenv("TOKEN_CACHE_FILE", "~/.cache/myapp/token.json")).expanduser()
 CACHE_PATH.parent.mkdir(parents=True, exist_ok=True)

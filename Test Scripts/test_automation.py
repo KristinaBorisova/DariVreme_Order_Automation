@@ -97,7 +97,7 @@ def test_google_sheets_connection():
         # Add path for imports (go up one directory from Test Scripts)
         sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'step_2_quota_Config'))
         from step_2_quota_Config.sheet_to_json import load_workbook_to_dict
-        
+
         google_sheets_url = os.getenv('GOOGLE_SHEETS_URL')
         if not google_sheets_url:
             print("❌ GOOGLE_SHEETS_URL not set")
