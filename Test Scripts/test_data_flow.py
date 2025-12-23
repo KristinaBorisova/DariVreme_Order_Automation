@@ -9,8 +9,7 @@ import sys
 from datetime import datetime
 
 # Add paths for imports
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'step_2_quota_Config'))
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'step_3_send_order_with_quotaID'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 def test_quote_data_structure():
     """Test that quote data has the correct structure for order creation."""

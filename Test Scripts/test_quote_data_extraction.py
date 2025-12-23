@@ -9,7 +9,7 @@ import sys
 from datetime import datetime
 
 # Add paths for imports
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'step_2_quota_Config'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 def test_quote_data_extraction():
     """Test that quote creation properly extracts client details from Excel data."""
