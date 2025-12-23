@@ -5,17 +5,17 @@ Order logging system that saves results directly to Google Sheets.
 """
 
 import os
-import json
-import pandas as pd
 from datetime import datetime
-from typing import Dict, Any, List, Optional
-import requests
+from typing import Dict, Any
+
 import gspread
+import pandas as pd
 from google.oauth2.service_account import Credentials
+
 
 class GoogleSheetsLogger:
     """Class to handle order logging directly to Google Sheets."""
-    
+
     def __init__(self, spreadsheet_url: str, sheet_name: str = "Glovo-Orders-Summary"):
         """
         Initialize the Google Sheets logger.
@@ -28,7 +28,7 @@ class GoogleSheetsLogger:
         self.sheet_name = sheet_name
         self.order_log = []
         self.spreadsheet_id = self._extract_spreadsheet_id(spreadsheet_url)
-        
+
     def _extract_spreadsheet_id(self, url: str) -> str:
         """Extract spreadsheet ID from Google Sheets URL."""
         import re
@@ -36,13 +36,13 @@ class GoogleSheetsLogger:
         if not match:
             raise ValueError("Could not extract spreadsheet ID from URL")
         return match.group(1)
-    
+
     def _setup_google_sheets_connection(self):
         """Setup connection to Google Sheets using service account."""
         try:
             # Check if service account credentials exist
             credentials_file = "google_sheets_credentials.json"
-            
+
             if not os.path.exists(credentials_file):
                 print("⚠️  Google Sheets credentials not found.")
                 print("💡 To use Google Sheets logging, you need to:")
@@ -52,29 +52,29 @@ class GoogleSheetsLogger:
                 print("   4. Download credentials as 'google_sheets_credentials.json'")
                 print("   5. Share your spreadsheet with the service account email")
                 return None
-            
+
             # Define the scope
             scope = [
                 'https://www.googleapis.com/auth/spreadsheets',
                 'https://www.googleapis.com/auth/drive'
             ]
-            
+
             # Load credentials
             creds = Credentials.from_service_account_file(credentials_file, scopes=scope)
-            
+
             # Authorize and create client
             client = gspread.authorize(creds)
-            
+
             # Open the spreadsheet
             spreadsheet = client.open_by_key(self.spreadsheet_id)
-            
+
             return spreadsheet
-            
+
         except Exception as e:
             print(f"❌ Google Sheets connection failed: {e}")
             return None
-    
-    def log_order(self, order_data: Dict[str, Any], quote_data: Dict[str, Any], 
+
+    def log_order(self, order_data: Dict[str, Any], quote_data: Dict[str, Any],
                   client_details: Dict[str, str]) -> Dict[str, Any]:
         """
         Log a single order with all relevant information.
@@ -92,35 +92,35 @@ class GoogleSheetsLogger:
         status = order_data.get('status', {})
         order_state = status.get('state', 'UNKNOWN')
         created_at = status.get('createdAt', datetime.now().isoformat())
-        
+
         # Extract quote information
         quote_info = order_data.get('quote', {})
         quote_id = quote_info.get('quoteId', 'N/A')
         quote_price = quote_info.get('quotePrice', 0)
         currency = quote_info.get('currencyCode', 'N/A')
-        
+
         # Extract delivery information
         delivery_info = order_data.get('address', {})
         delivery_address = delivery_info.get('rawAddress', 'N/A')
         delivery_coordinates = delivery_info.get('coordinates', {})
         delivery_lat = delivery_coordinates.get('latitude', 0)
         delivery_lng = delivery_coordinates.get('longitude', 0)
-        
+
         # Extract pickup information
         pickup_info = order_data.get('pickupDetails', {})
         pickup_address_book_id = pickup_info.get('addressBook', {}).get('id', 'N/A')
         pickup_time = pickup_info.get('pickupTime', 'N/A')
         pickup_order_code = pickup_info.get('pickupOrderCode', 'N/A')
-        
+
         # Extract contact information - prioritize client_details over order_data
         contact_info = order_data.get('contact', {})
         contact_name = client_details.get('name', contact_info.get('name', 'N/A'))
         contact_phone = client_details.get('phone', contact_info.get('phone', 'N/A'))
         contact_email = client_details.get('email', contact_info.get('email', 'N/A'))
-        
+
         # Calculate expected delivery time (if available)
         estimated_delivery = order_data.get('estimatedTimeOfArrival', 'N/A')
-        
+
         # Create log entry
         log_entry = {
             'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
@@ -144,18 +144,18 @@ class GoogleSheetsLogger:
             'city_code': order_data.get('cityCode', 'N/A'),
             'cancellable': order_data.get('cancellable', False)
         }
-        
+
         # Add to log
         self.order_log.append(log_entry)
-        
+
         print(f"📝 Order logged:")
         print(f"   Order ID: {order_id}")
         print(f"   Client: {contact_name}")
         print(f"   Status: {order_state}")
         print(f"   Price: {quote_price} {currency}")
-        
+
         return log_entry
-    
+
     def save_to_google_sheets(self) -> bool:
         """
         Save order log to Google Sheets.
@@ -166,15 +166,15 @@ class GoogleSheetsLogger:
         if not self.order_log:
             print("⚠️  No orders to save")
             return False
-        
+
         try:
             # Setup Google Sheets connection
             spreadsheet = self._setup_google_sheets_connection()
-            
+
             if not spreadsheet:
                 print("❌ Could not connect to Google Sheets")
                 return False
-            
+
             # Get or create the worksheet
             try:
                 worksheet = spreadsheet.worksheet(self.sheet_name)
@@ -182,7 +182,7 @@ class GoogleSheetsLogger:
             except gspread.WorksheetNotFound:
                 print(f"📝 Creating new sheet: {self.sheet_name}")
                 worksheet = spreadsheet.add_worksheet(title=self.sheet_name, rows=1000, cols=20)
-            
+
             # Prepare data for Google Sheets
             if not worksheet.get_all_values():
                 # If sheet is empty, add headers
@@ -195,7 +195,7 @@ class GoogleSheetsLogger:
                 ]
                 worksheet.append_row(headers)
                 print(f"✅ Added headers to sheet")
-            
+
             # Add order data
             for order in self.order_log:
                 row_data = [
@@ -221,17 +221,17 @@ class GoogleSheetsLogger:
                     order['cancellable']
                 ]
                 worksheet.append_row(row_data)
-            
+
             print(f"✅ Successfully saved {len(self.order_log)} orders to Google Sheets")
             print(f"📊 Sheet: {self.sheet_name}")
             print(f"🔗 URL: {self.spreadsheet_url}")
-            
+
             return True
-            
+
         except Exception as e:
             print(f"❌ Failed to save to Google Sheets: {e}")
             return False
-    
+
     def get_order_summary(self) -> Dict[str, Any]:
         """
         Get summary statistics of logged orders.
@@ -241,9 +241,9 @@ class GoogleSheetsLogger:
         """
         if not self.order_log:
             return {"total_orders": 0}
-        
+
         df = pd.DataFrame(self.order_log)
-        
+
         summary = {
             "total_orders": len(df),
             "orders_by_status": df['order_state'].value_counts().to_dict(),
@@ -256,35 +256,36 @@ class GoogleSheetsLogger:
             "unique_clients": df['client_name'].nunique(),
             "unique_pickup_locations": df['pickup_address_book_id'].nunique()
         }
-        
+
         return summary
-    
+
     def print_summary(self):
         """Print order summary statistics."""
         summary = self.get_order_summary()
-        
+
         print(f"\n📊 Order Summary:")
         print(f"   Total Orders: {summary['total_orders']}")
         print(f"   Total Value: {summary['total_value']} {summary['currency']}")
         print(f"   Unique Clients: {summary['unique_clients']}")
         print(f"   Unique Pickup Locations: {summary['unique_pickup_locations']}")
-        
+
         if summary['orders_by_status']:
             print(f"   Orders by Status:")
             for status, count in summary['orders_by_status'].items():
                 print(f"     {status}: {count}")
-        
+
         if summary['date_range']['earliest']:
             print(f"   Date Range: {summary['date_range']['earliest']} to {summary['date_range']['latest']}")
+
 
 def test_google_sheets_logger():
     """Test the Google Sheets logger with sample data."""
     print("🧪 Testing Google Sheets Logger")
     print("=" * 50)
-    
+
     # Your Google Sheets URL
     spreadsheet_url = "https://docs.google.com/spreadsheets/d/YOUR_SPREADSHEET_ID/edit"
-    
+
     # Create sample order data
     sample_order_data = {
         "trackingNumber": "100010000000",
@@ -320,7 +321,7 @@ def test_google_sheets_logger():
         "cityCode": "SOF",
         "cancellable": True
     }
-    
+
     sample_quote_data = {
         "quote_id": "12345678-1234-1234-1234-123456789012",
         "original_row": {
@@ -329,31 +330,32 @@ def test_google_sheets_logger():
             "deliveryRawAddress": "g.k. Strelbishte, Nishava St 111р 1408, Bulgaria"
         }
     }
-    
+
     sample_client_details = {
         "name": "Test Client",
         "phone": "+1234567890",
         "email": "client@example.com"
     }
-    
+
     # Test logger
     logger = GoogleSheetsLogger(spreadsheet_url, "Glovo-Orders-Summary")
-    
+
     # Log the order
     log_entry = logger.log_order(sample_order_data, sample_quote_data, sample_client_details)
-    
+
     # Print summary
     logger.print_summary()
-    
+
     # Save to Google Sheets
     success = logger.save_to_google_sheets()
-    
+
     if success:
         print(f"\n✅ Google Sheets logging test completed successfully!")
         return True
     else:
         print(f"\n❌ Google Sheets logging test failed")
         return False
+
 
 if __name__ == "__main__":
     test_google_sheets_logger()
