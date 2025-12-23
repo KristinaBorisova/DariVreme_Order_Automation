@@ -16,7 +16,7 @@ URL = "https://stageapi.glovoapp.com/v2/laas/quotes"
 
 # Import token service from step 1
 import sys
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'step_1_authentication'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from step_1_authentication.token_service import get_bearer_token
 
 # Get token from authentication module

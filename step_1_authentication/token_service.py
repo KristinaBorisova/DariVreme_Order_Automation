@@ -1,4 +1,5 @@
-import os, json, time, pathlib, requests, step_1_authentication.config as config
+import os, json, time, pathlib, requests
+from . import config
 from typing import Optional
 
 CACHE_PATH = pathlib.Path(os.getenv("TOKEN_CACHE_FILE", "~/.cache/myapp/token.json")).expanduser()
