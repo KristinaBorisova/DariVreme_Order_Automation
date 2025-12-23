@@ -1,6 +1,11 @@
 import os, json, time, pathlib, requests
-from . import config
 from typing import Optional
+
+# Support both running as script and importing as module
+try:
+    from . import config
+except ImportError:
+    import config
 
 CACHE_PATH = pathlib.Path(os.getenv("TOKEN_CACHE_FILE", "~/.cache/myapp/token.json")).expanduser()
 CACHE_PATH.parent.mkdir(parents=True, exist_ok=True)
