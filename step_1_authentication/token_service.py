@@ -1,4 +1,4 @@
-import os, json, time, pathlib, requests, config as config
+import os, json, time, pathlib, requests, step_1_authentication.config as config
 from typing import Optional
 
 CACHE_PATH = pathlib.Path(os.getenv("TOKEN_CACHE_FILE", "~/.cache/myapp/token.json")).expanduser()
@@ -24,23 +24,23 @@ def _fetch_new_token() -> str:
     # Use environment variables if available, fallback to hardcoded values
     api_key = config.API_KEY
     api_secret = config.API_SECRET
-    
+
     payload = {
         "grantType": "client_credentials",
         "clientId": api_key,
         "clientSecret": api_secret
     }
     headers = {"Content-Type": "application/json"}
-    
+
     print(f"🔑 Fetching token from: {config.API_URL}")
     print(f"🔑 Using API Key: {api_key[:8]}...")
-    
+
     r = requests.post(config.API_URL, json=payload, headers=headers, timeout=30)
-    
+
     if r.status_code != 200:
         print(f"❌ Token request failed: {r.status_code}")
         print(f"❌ Response: {r.text}")
-    
+
     r.raise_for_status()
     data = r.json()
     token = data.get("accessToken")
@@ -60,7 +60,7 @@ def get_bearer_token(force_refresh: bool = False) -> str:
             return cached["accessToken"]
     return _fetch_new_token()
 
-#For testing purposes 
+#For testing purposes
 if __name__ == "__main__":
     try:
         token = get_bearer_token()
