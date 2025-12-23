@@ -11,7 +11,6 @@ import os
 import sys
 from datetime import datetime
 from typing import Dict, Any, List
-from dotenv import load_dotenv
 
 # Add paths for imports
 sys.path.append(os.path.join(os.path.dirname(__file__), 'step_1_authentication'))
