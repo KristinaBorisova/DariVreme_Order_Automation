@@ -46,8 +46,8 @@ def test_authentication():
     
     try:
         # Add path for imports (go up one directory from Test Scripts)
-        sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'step_1_authentication'))
-        from token_service import get_bearer_token
+        sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+        from step_1_authentication.token_service import get_bearer_token
         
         print("📤 Requesting bearer token...")
         token = get_bearer_token()
@@ -95,7 +95,7 @@ def test_google_sheets_connection():
     
     try:
         # Add path for imports (go up one directory from Test Scripts)
-        sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'step_2_quota_Config'))
+        sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
         from step_2_quota_Config.sheet_to_json import load_workbook_to_dict
 
         google_sheets_url = os.getenv('GOOGLE_SHEETS_URL')

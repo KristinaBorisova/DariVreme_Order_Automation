@@ -9,8 +9,7 @@ import sys
 from datetime import datetime
 
 # Add paths for imports
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'step_2_quota_Config'))
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'step_3_send_order_with_quotaID'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 def debug_order_creation_flow():
     """Debug the order creation flow to find where client details are lost."""

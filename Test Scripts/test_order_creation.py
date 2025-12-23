@@ -9,9 +9,7 @@ import sys
 from datetime import datetime
 
 # Add paths for imports
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'step_1_authentication'))
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'step_2_quota_Config'))
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'step_3_send_order_with_quotaID'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 def test_order_creation_flow():
     """Test the complete order creation flow."""
